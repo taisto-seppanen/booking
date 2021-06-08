@@ -27,9 +27,9 @@ export default {
         };
     },
     mounted() {
-        if (!localStorage.news) this.getDefaultValues();
-        if (localStorage.news) {
-        this.newsArray = JSON.parse(localStorage.getItem("news"));
+        if (!localStorage.newsArray) this.getDefaultValues();
+        if (localStorage.newsArray) {
+        this.newsArray = JSON.parse(localStorage.getItem("newsArray"));
         }
     },
 
@@ -52,7 +52,7 @@ export default {
           newsText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
         },
       ];
-      localStorage.setItem("news", JSON.stringify(defaultNews));
+      localStorage.setItem("newsArray", JSON.stringify(defaultNews));
       
       return 
         },
