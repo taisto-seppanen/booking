@@ -30,7 +30,7 @@
             >
 
           <li class="nav-item">
-            <NuxtLink to='/' o-prefetch class="nav-link" aria-disabled="true"
+            <NuxtLink to='/contacts' o-prefetch class="nav-link" aria-disabled="true"
               >Контакты</NuxtLink
             >
           </li>
