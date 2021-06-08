@@ -9,13 +9,14 @@
     </footer>
 </template>
 
-<style>
-footer { position: fixed;
+<style scoped>
+footer { 
     height: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
     bottom: 0;
     margin: 0;
-    width: 100%;}
+    width: 100%;
+    }
 </style>

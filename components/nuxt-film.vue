@@ -1,9 +1,10 @@
 <template>
     <div>
 <div>
-  <b-button v-b-modal.modal-1>Launch demo modal</b-button>
+  <b-button v-b-modal.modal-1>Бронирование</b-button>
 
-  <b-modal id="modal-1" title="Резервирование биллетов">
+  <b-modal id="modal-1" title="Резервирование биллетов" cancel-title='Отмена' ok-title="Забронировать" @ok="addBooking()">
+    {{film.filmname}}
      Дата:
     <input
       type="date"
@@ -39,17 +40,6 @@
             {{number}}
           </button>
         </div>
-
-                  <button
-                    type="button"
-                    class="btn btn-success"
-                    data-bs-dismiss="modal"
-                    @click="addBooking"
-                    :disabled="currentPlaces.length == 0 || isDisableBtn"
-                  >
-                    Зарезервировать
-                  </button>
-
       </div>
   </b-modal>
 </div>
@@ -82,17 +72,21 @@ export default {
 
   watch: {
     currentDate: function () {
-      this.getSessionsList();
+      if (this.currentDate != "") this.getSessionsList();
      },
 
      currentTime: function () {
-       this.getPlaces();
+       if(this.currentTime != "") this.getPlaces();
      }
   },
 
   methods: {
     getSessionsList() {
-      this.sessionsForCurrentDay = this.film.dates.find((day) => day.date === this.currentDate).sessions;
+      try {
+        this.sessionsForCurrentDay = this.film.dates.find((day) => day.date === this.currentDate).sessions;
+      } catch {
+        console.error();
+      }
     },
 
     getPlaces() {
@@ -110,6 +104,36 @@ export default {
         this.currentPlaces.push(index);
         console.log(this.currentPlaces)
       }
+    },
+
+    addBooking() {
+      let films = JSON.parse(localStorage.getItem("films"));
+      let filmIndex = films.map((e) => e.filmname).indexOf(this.film.filmname);
+      let dateIndex = this.film.dates.map((e) => e.date).indexOf(this.currentDate);
+      let sessionIndex = this.sessionsForCurrentDay.map((e) => e.time).indexOf(parseInt(this.currentTime));
+
+
+        console.log(this.currentFilm);
+        console.log(dateIndex);
+        console.log(films[filmIndex]);
+
+      for (let place of this.currentPlaces) {
+        films[filmIndex].dates[dateIndex].sessions[sessionIndex].places.push(parseInt(place));
+      }
+
+      const AddCurrentPlacesForSession = films;
+      localStorage.setItem("films", JSON.stringify(AddCurrentPlacesForSession));
+
+      this.clear();
+    },
+
+    clear() {
+      this.film = '';
+      this.currentDate = 0;
+      this.currentTime = 0;
+      this.currentPlaces = [];
+      this.sessionsForCurrentDay = [];
+      this.placesForCurrentSession = [];
     },
   },
 }
