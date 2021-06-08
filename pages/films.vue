@@ -3,8 +3,7 @@
     <div :key="film.filmpic" v-for="film in films">
 
       <div class="card-body">
-
-        <div class="cardWrapper" style="display: flex">
+        <div class="cardWrapper">
           <div style="margin: 10px">
             <img
             :src="film.filmpic"
@@ -22,11 +21,6 @@
 
       </div>
     </div>
-
-
-
-
-
   </main>
 </template>
 
@@ -45,10 +39,6 @@ export default {
         this.films = JSON.parse(localStorage.getItem("films"));
         }
     },
-// часть имитации работы сервера (запускаем получение дефолтных значений если пользователь еще у нас не был.)
-    // async created() {
-    //   if (!localStorage.films) this.getDefaultValues();
-    // },
 
 // Услонвый запрос на сервер
     methods: {
@@ -295,3 +285,17 @@ export default {
     }
 
 </script>
+
+<style scoped>
+  .card-body {
+    width: 90%;
+    display: flex;
+    margin: 0 auto;
+  }
+  .cardWrapper{
+    display: flex;
+    background: rgb(241, 241, 241);
+    border-radius: 5px;
+
+}
+</style>
