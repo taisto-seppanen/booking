@@ -5,28 +5,15 @@
 </template>
 
 <script>
-
 export default {
     layout: "admin",
 
-    data(){
-        return {
-        }
-    },
-    
     mounted() {
-        // this.newsArray = JSON.parse(localStorage.getItem("newsArray"));
-        // if (!localStorage.authorization) {
-        //     this.$router.push('../login/');
-        // }
-    },
-
-    methods: {
-        //func
-    },
+        if (localStorage.authorization == "true") {            
+        } else {
+        console.log(localStorage.authorization == "true")
+        this.$router.push('../login/');
+        }
+    }
 }
 </script>
-
-<style scoped>
-
-</style>

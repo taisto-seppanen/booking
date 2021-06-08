@@ -15,23 +15,40 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <NuxtLink
-              class="nav-link"
-              no-prefetch
-              to="../admin/NewsPandel"
-              >Редактирование новостей</NuxtLink
-            >
+
+           <li class="nav-item">
+            <NuxtLink to="../admin/" class="nav-link" no-prefetch>Главная</NuxtLink>
           </li>
 
           <li class="nav-item">
-            <NuxtLink to='../admin/FilmsPanel' no-prefetch class="nav-link" aria-disabled="true"
-              >Редактирование фильмов</NuxtLink
-            >
+            <NuxtLink to="../admin/NewsPandel" class="nav-link" no-prefetch>Редактирование новостей</NuxtLink>
           </li>
+
+          <li class="nav-item">
+            <NuxtLink to='../admin/FilmsPanel' no-prefetch class="nav-link">Редактирование фильмов</NuxtLink>
+          </li>
+
+          <li class="nav-item">
+            <a to='href' @click="logout" no-prefetch class="nav-link">Выйти</a>
+          </li>
+
         </ul>
       </div>
     </div>
   </nav>
 </header>
 </template>
+
+<script>
+export default {
+    layout: "admin",
+
+    methods: {
+      logout() {
+        localStorage.setItem("authorization", JSON.stringify(false));
+        this.$router.push('../login/');
+      }
+    },
+    
+}
+</script>

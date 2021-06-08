@@ -1,6 +1,6 @@
 <template>
   <main>
-    <div class="card-body" :key="news.title" v-for="news in newsArray">
+    <div class="card-body" :key="news.title" v-for="news in newsArray.reverse()">
           <div class='gridItem'>
             <img
             :src="news.newsPic"

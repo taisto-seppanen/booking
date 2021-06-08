@@ -7,7 +7,10 @@
             <p>Дата: <input type="date" v-model="newDate"></p>
             <p>Тект новости: <input type="text" v-model="newText"></p>
             <p>Ссылка на картинку: <input type="text" v-model="newPicLink"></p>
-            <button @click="addNews">Добавить новость</button>
+            <button @click="addNews"
+            :disabled="newTittle == '' && newDate == ''
+             && newText == '' && newPicLink == ''"
+            >Добавить новость</button>
 
         </div>
         <ul>Список новостей:
@@ -36,9 +39,10 @@ export default {
     },
     
     mounted() {
-        this.newsArray = JSON.parse(localStorage.getItem("newsArray"));
-        if (!localStorage.authorization) {
-            this.$router.push('../login/');
+        if (localStorage.authorization == "true") {            
+        } else {
+        console.log(localStorage.authorization == "true")
+        this.$router.push('../login/');
         }
     },
 
