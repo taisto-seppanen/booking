@@ -1,7 +1,7 @@
 <template>
   <main>
     <div>
-      <b-modal id="filmmodal" title="Бронирование мест" hide-footer>
+      <b-modal id="filmmodal" title="Бронирование мест" hide-footer no-close-on-backdrop @close="clear()">
         Дата: <input type="date" id="start" v-model="currentDate" />
         Время: <select style="width: 100px" v-model="currentTime">
                 <option :key="t.time" v-for="t in sessionsForCurrentDay"> {{t.time}} </option>
@@ -73,6 +73,7 @@ export default {
         isDisableBtn: false,
       }
     },
+// часть имитации работы с сервером     
     mounted() {
         if (!localStorage.films) this.setDefaultValues();
         if (localStorage.films) {
@@ -81,25 +82,29 @@ export default {
     },
 
     watch: {
-    //следим за изменениями выбора даты
+//следим за изменениями выбора даты
       currentDate: function () {
-        this.currentTime = "";
+      this.currentTime = "";
+      this.currentPlaces= [];
 
       this.currentDate != ""
         ? (this.isDateSelected = true)
         : (this.isDateSelected = false);
-
-        console.log(this.currentDate);
         this.getSessionsList();
       },
 
-    // Следим за временем
-    // проверяем возможно ли бронирование на текущее время.
+// Следим за временем
+// проверяем возможно ли бронирование на текущее время.
       currentTime: function () {
+        this.currentPlaces= [];
+
+
         if (this.currentTime != "") {
-          this.placesForCureentSession = this.sessionsForCurrentDay.find(
-            (x) => x.time == this.currentTime
-          ).places;
+          try {
+          this.placesForCureentSession = this.sessionsForCurrentDay.find((x) => x.time == this.currentTime).places;
+          } catch(error) {
+            console.warn(`Don't panic, it's ok! ${error}`)
+            }
         } else {
           this.placesForCureentSession = [];
         }
@@ -117,17 +122,14 @@ export default {
 // метод выбора фильма
       chooseFilm(film) {
         this.currentFilm = film;
-        console.log(this.currentFilm.filmname);
       },
 
 // метод получения списка сеансов
       getSessionsList() {
-         console.log("getSessionsList")
         if (this.isDateSelected == true) {
           try {
             this.sessionsForCurrentDay = this.currentFilm.dates.find((day) => day.date === this.currentDate).sessions;
-            console.log(this.sessionsForCurrentDay);
-          } catch (error) {}
+          } catch (error) {console.warn(`Don't panic, it's ok! ${error}`)}
           } else {
             this.sessionsForCurrentDay = [];
           }
@@ -145,11 +147,8 @@ export default {
 
     addBooking() {
       let filmIndex = this.films.map((e) => e.filmname).indexOf(this.currentFilm.filmname);
-      console.log("filmIndex "+ filmIndex);
       let dateIndex = this.currentFilm.dates.map((e) => e.date).indexOf(this.currentDate);
-      console.log("dateIndex "+dateIndex);
       let sessionIndex = this.sessionsForCurrentDay.map((e) => e.time).indexOf(parseInt(this.currentTime));
-      console.log("sessionIndex "+sessionIndex);
 
       for (let x of this.currentPlaces) {
 
@@ -173,6 +172,121 @@ export default {
 
       async setDefaultValues() {
       let newfilm = [
+       {
+          filmpic:
+            "https://kuda-spb.ru//uploads/190628165505643.jpg",
+          filmdescription:
+            "Разовые порции сахара, сливок, разовые порции масла, полуфабрикаты для микроволновки, мини наборы шампуня и кондиционера, микроскопические кремы, крохотные кусочки мыла. Люди, встречающиеся мне во время перелетов, — одноразовые друзья! Мы проводим вместе время от взлета до посадки и не более того...",
+          id: 0,
+          filmname: "Бойцовский клуб",
+          dates: [
+            {
+              date: "2021-06-09",
+              sessions: [
+                {
+                  time: 20,
+                  places: [],
+                },
+                {
+                  time: 22,
+                  places: [],
+                },
+              ],
+            },
+            {
+              date: "2021-06-10",
+              sessions: [
+                {
+                  time: 20,
+                  places: [],
+                },
+                {
+                  time: 22,
+                  places: [],
+                },
+              ],
+            },
+            {
+              date: "2021-06-11",
+              sessions: [
+                {
+                  time: 20,
+                  places: [],
+                },
+                {
+                  time: 22,
+                  places: [],
+                },
+              ],
+            },
+            {
+              date: "2021-06-12",
+              sessions: [
+                {
+                  time: 20,
+                  places: [],
+                },
+                {
+                  time: 22,
+                  places: [],
+                },
+              ],
+            },
+            {
+              date: "2021-06-13",
+              sessions: [
+                {
+                  time: 20,
+                  places: [],
+                },
+                {
+                  time: 22,
+                  places: [],
+                },
+              ],
+            },
+            {
+              date: "2021-06-14",
+              sessions: [
+                {
+                  time: 20,
+                  places: [],
+                },
+                {
+                  time: 22,
+                  places: [],
+                },
+              ],
+            },
+            {
+              date: "2021-06-15",
+              sessions: [
+                {
+                  time: 20,
+                  places: [],
+                },
+                {
+                  time: 22,
+                  places: [],
+                },
+              ],
+            },
+            {
+              date: "2021-06-16",
+              sessions: [
+                {
+                  time: 20,
+                  places: [],
+                },
+                {
+                  time: 22,
+                  places: [],
+                },
+              ],
+            },
+          ],
+        },
+
         {
           filmpic:
             "https://upload.wikimedia.org/wikipedia/ru/9/9d/Matrix-DVD.jpg",
@@ -182,105 +296,98 @@ export default {
           filmname: "Матрица",
           dates: [
             {
-              date: "2021-06-04",
-              sessions: [
-                {
-                  time: 10,
-                  places: [0, 1],
-                },
-              ],
-            },
-            {
-              date: "2021-05-30",
-              sessions: [
-                {
-                  time: 10,
-                  places: [0, 1],
-                },
-                {
-                  time: 12,
-                  places: [],
-                },
-                {
-                  time: 14,
-                  places: [],
-                },
-                {
-                  time: 20,
-                  places: [],
-                },
-              ],
-            },
-            {
-              date: "2021-06-06",
-              sessions: [
-                {
-                  time: 16,
-                  places: [],
-                },
-                {
-                  time: 18,
-                  places: [],
-                },
-              ],
-            },
-            {
-              date: "2021-06-07",
-              sessions: [
-                {
-                  time: 10,
-                  places: [0, 1],
-                },
-                {
-                  time: 12,
-                  places: [],
-                },
-                {
-                  time: 14,
-                  places: [],
-                },
-                {
-                  time: 20,
-                  places: [],
-                },
-              ],
-            },
-            {
-              date: "2021-06-08",
-              sessions: [
-                {
-                  time: 16,
-                  places: [],
-                },
-                {
-                  time: 18,
-                  places: [],
-                },
-              ],
-            },
-            {
               date: "2021-06-09",
               sessions: [
                 {
-                  time: 10,
-                  places: [0, 1],
-                },
-                {
-                  time: 12,
+                  time: 16,
                   places: [],
                 },
                 {
-                  time: 14,
-                  places: [],
-                },
-                {
-                  time: 20,
+                  time: 18,
                   places: [],
                 },
               ],
             },
             {
               date: "2021-06-10",
+              sessions: [
+                {
+                  time: 16,
+                  places: [],
+                },
+                {
+                  time: 18,
+                  places: [],
+                },
+              ],
+            },
+            {
+              date: "2021-06-11",
+              sessions: [
+                {
+                  time: 16,
+                  places: [],
+                },
+                {
+                  time: 18,
+                  places: [],
+                },
+              ],
+            },
+            {
+              date: "2021-06-12",
+              sessions: [
+                {
+                  time: 16,
+                  places: [],
+                },
+                {
+                  time: 18,
+                  places: [],
+                },
+              ],
+            },
+            {
+              date: "2021-06-13",
+              sessions: [
+                {
+                  time: 16,
+                  places: [],
+                },
+                {
+                  time: 18,
+                  places: [],
+                },
+              ],
+            },
+            {
+              date: "2021-06-14",
+              sessions: [
+                {
+                  time: 16,
+                  places: [],
+                },
+                {
+                  time: 18,
+                  places: [],
+                },
+              ],
+            },
+            {
+              date: "2021-06-15",
+              sessions: [
+                {
+                  time: 16,
+                  places: [],
+                },
+                {
+                  time: 18,
+                  places: [],
+                },
+              ],
+            },
+            {
+              date: "2021-06-16",
               sessions: [
                 {
                   time: 16,
@@ -302,82 +409,18 @@ export default {
             "Богатый промышленник постоянно попадает в неприятности из-за обострённого чувства справедливости, а эксцентричный психолог, использующий в работе образ шута, решает развенчать его иллюзии о мире с помощью серии масштабных пранков",
           dates: [
             {
-              date: "2021-05-30",
-              sessions: [
-                {
-                  time: 16,
-                  places: [],
-                },
-                {
-                  time: 18,
-                  places: [],
-                },
-              ],
-            },
-            {
-              date: "2021-06-06",
-              sessions: [
-                {
-                  time: 10,
-                  places: [],
-                },
-                {
-                  time: 12,
-                  places: [],
-                },
-                {
-                  time: 14,
-                  places: [],
-                },
-                {
-                  time: 20,
-                  places: [],
-                },
-              ],
-            },
-            {
-              date: "2021-06-07",
-              sessions: [
-                {
-                  time: 16,
-                  places: [],
-                },
-                {
-                  time: 18,
-                  places: [],
-                },
-              ],
-            },
-            {
-              date: "2021-06-08",
-              sessions: [
-                {
-                  time: 10,
-                  places: [],
-                },
-                {
-                  time: 12,
-                  places: [],
-                },
-                {
-                  time: 14,
-                  places: [],
-                },
-                {
-                  time: 20,
-                  places: [],
-                },
-              ],
-            },
-            {
               date: "2021-06-09",
               sessions: [
                 {
-                  time: 16,
+                  time: 10,
                   places: [],
                 },
                 {
-                  time: 18,
+                  time: 12,
+                  places: [],
+                },
+                {
+                  time: 14,
                   places: [],
                 },
               ],
@@ -397,8 +440,89 @@ export default {
                   time: 14,
                   places: [],
                 },
+              ],
+            },
+            {
+              date: "2021-06-11",
+              sessions: [
                 {
-                  time: 20,
+                  time: 10,
+                  places: [],
+                },
+                {
+                  time: 12,
+                  places: [],
+                },
+                {
+                  time: 14,
+                  places: [],
+                },
+              ],
+            },
+            {
+              date: "2021-06-12",
+              sessions: [
+                {
+                  time: 10,
+                  places: [],
+                },
+                {
+                  time: 12,
+                  places: [],
+                },
+                {
+                  time: 14,
+                  places: [],
+                },
+              ],
+            },
+            {
+              date: "2021-06-13",
+              sessions: [
+                {
+                  time: 10,
+                  places: [],
+                },
+                {
+                  time: 12,
+                  places: [],
+                },
+                {
+                  time: 14,
+                  places: [],
+                },
+              ],
+            },
+            {
+              date: "2021-06-14",
+              sessions: [
+                {
+                  time: 10,
+                  places: [],
+                },
+                {
+                  time: 12,
+                  places: [],
+                },
+                {
+                  time: 14,
+                  places: [],
+                },
+              ],
+            },
+            {
+              date: "2021-06-15",
+              sessions: [
+                {
+                  time: 10,
+                  places: [],
+                },
+                {
+                  time: 12,
+                  places: [],
+                },
+                {
+                  time: 14,
                   places: [],
                 },
               ],
