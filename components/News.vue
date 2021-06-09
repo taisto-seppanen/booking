@@ -1,10 +1,10 @@
 <template>
   <main>
-    <div class="card-body" :key="news.title" v-for="news in newsArray.reverse()">
+    <div class="card-body" :key="news.title" v-for="news in newsArray">
           <div class='gridItem'>
             <img
             :src="news.newsPic"
-            onError="this.src='/_nuxt/assets/newspic.jpg'"
+            @error="replaceByDefault"
             class="card-img-top"
             style="max-width: 400px;"
             />
@@ -28,15 +28,20 @@ export default {
         };
     },
     mounted() {
-        if (!localStorage.newsArray) this.getDefaultValues();
+        if (!localStorage.newsArray) this.setDefaultValues();
         if (localStorage.newsArray) {
-        this.newsArray = JSON.parse(localStorage.getItem("newsArray"));
+        this.newsArray = JSON.parse(localStorage.getItem("newsArray")).reverse();
         }
     },
 
 // Услонвый запрос на сервер
     methods: {
-      async getDefaultValues() {
+
+      replaceByDefault(e) {
+       e.target.src = 'https://guwahatiplus.com/public/web/images/default-news.png';
+    },
+
+      async setDefaultValues() {
       let defaultNews = [
         {
           id: 0,
