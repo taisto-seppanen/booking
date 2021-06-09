@@ -1,5 +1,6 @@
 <template>
 <main>
+
   <News></News>
 </main>
 </template>

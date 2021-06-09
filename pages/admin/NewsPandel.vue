@@ -1,16 +1,16 @@
 <template>
     <div class="newsRedactPandel">
         <h1>Редактирование новостей</h1>
-        <button @click='isVisible=!isVisible'>Добавить новость</button>
+        <b-button @click='isVisible=!isVisible'>Добавить новость</b-button>
         <div v-if="isVisible">
-            <p>Заголовок: <input type="text" v-model="newTittle"></p>
-            <p>Дата: <input type="date" v-model="newDate"></p>
-            <p>Тект новости: <input type="text" v-model="newText"></p>
-            <p>Ссылка на картинку: <input type="text" v-model="newPicLink"></p>
-            <button @click="addNews"
+            <p>Заголовок: <b-form-input type="text" v-model="newTittle"></b-form-input></p>
+            <p>Дата: <b-form-input type="date" v-model="newDate"></b-form-input></p>
+            <p>Тект новости: <b-form-input type="text" v-model="newText"></b-form-input></p>
+            <p>Ссылка на картинку: <b-form-input type="text" v-model="newPicLink"></b-form-input></p>
+            <b-button @click="addNews"
             :disabled="newTittle == '' && newDate == ''
              && newText == '' && newPicLink == ''"
-            >Добавить новость</button>
+            >Добавить новость</b-button>
 
         </div>
         <ul>Список новостей:
@@ -24,7 +24,7 @@
 
 <script>
 
-export default {
+export default {    
     layout: "admin",
 
     data(){
@@ -39,6 +39,9 @@ export default {
     },
     
     mounted() {
+
+        this.newsArray = JSON.parse(localStorage.getItem("newsArray"));
+
         if (localStorage.authorization == "true") {            
         } else {
         console.log(localStorage.authorization == "true")
