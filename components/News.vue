@@ -1,21 +1,26 @@
 <template>
-  <div>
-    <div class="card-body" :key="news.title" v-for="news in newsArray">
-          <div class='gridItem'>
-            <img
-            :src="news.newsPic"
-            @error="replaceByDefault"
-            class="card-img-top"
-            style="max-width: 400px;"
-            />
-          </div>
-          <div class='gridItem'>
-              <h2>{{ news.newsTittle }}</h2>
-              <p>{{ news.newsText }}</p>
-              <p class='newsDate'>Дата: {{ news.newsDate }}</p>
-          </div>
+
+
+     <div class="filmsArrayWrapper">
+      <b-card no-body class="overflow-hidden" style="max-width: 80rem; margin: 10px;" :key="news.title" v-for="news in newsArray">
+        <b-row no-gutters>
+          <b-col md="2" style="display: flex; ">
+            <b-card-img :src="news.newsPic" @error="replaceByDefault" alt="Image" class="rounded-0"></b-card-img>
+          </b-col>
+          <b-col md="10">
+            <b-card-body>
+              <b-card-text>
+                <h1>{{news.newsTittle}}</h1>
+                <p>{{news.newsText}}</p>
+                <p class='newsDate'>Дата: {{ news.newsDate }}</p>
+              </b-card-text>
+            </b-card-body>
+          </b-col>
+        </b-row>
+      </b-card>
     </div>
-  </div>
+
+
 </template>
 
  
@@ -71,7 +76,7 @@ export default {
           id: 3,
           newsDate: '2021-06-05',
           newsTittle: "Why Doctor Who fans are criticising the BBC’s stance on copyright",
-          newsPic: "https://m.spletnik.ru/img/2017/07/anton/20170717-who-post.jpg",
+          newsPic: "https://upload.wikimedia.org/wikipedia/ru/8/85/Doctor_Who_Series_5.png",
           newsText: "Doctor Who fans have always been a little different. After decades of the show being on air there’s a particular kind of devotion, excitement and sense of ownership over what began as a somewhat educational children’s programme about a time traveller, but morphed into an international brand that sometimes awkwardly straddles its dual identity.",
         },
       ];
@@ -84,7 +89,7 @@ export default {
 </script>
 
 <style scoped>
-    main {
+    .filmsArrayWrapper {
         width: 90%;
         margin: 0 auto;
     }
@@ -97,13 +102,12 @@ export default {
     }
     .card-body {
         margin: 10px;
-        background: rgb(241, 241, 241);
         border-radius: 5px;
         display: grid;
         grid-template-areas: "a a";
     }
     .newsDate {
-        text-align:right;
+        text-align: right;
         color: grey;
     }
 
