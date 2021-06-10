@@ -1,11 +1,15 @@
 <template>
   <div>
-      <nuxt-header />    
+    <header>
+      <Navbar />    
+    </header>
     <main>
-    <Nuxt />
+      <Nuxt />
     </main>
     
-    <nuxt-footer />
+    <footer>
+      <Footer />
+    </footer>
   </div>
 
 </template>

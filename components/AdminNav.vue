@@ -1,42 +1,21 @@
 <template>
-  <header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-           <li class="nav-item">
-            <NuxtLink to="../admin/" class="nav-link" no-prefetch>Главная</NuxtLink>
-          </li>
+<div>
+  <b-navbar toggleable="lg" type="dark" variant="dark">
+    <b-navbar-brand href="#">Админ</b-navbar-brand>
+    <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+    <b-collapse id="nav-collapse" is-nav>
+      <b-navbar-nav>
+        <NuxtLink to="../admin/" class="nav-link" no-prefetch>Главная</NuxtLink>
+        <NuxtLink to="../admin/NewsPandel" class="nav-link" no-prefetch>Редактирование новостей</NuxtLink>
+        <NuxtLink to='../admin/FilmsPanel' no-prefetch class="nav-link">Редактирование фильмов</NuxtLink>
+        <a to='href' @click="logout" no-prefetch class="nav-link">Выйти</a>
+      </b-navbar-nav>
+    </b-collapse>
+  </b-navbar>
+</div>
 
-          <li class="nav-item">
-            <NuxtLink to="../admin/NewsPandel" class="nav-link" no-prefetch>Редактирование новостей</NuxtLink>
-          </li>
 
-          <li class="nav-item">
-            <NuxtLink to='../admin/FilmsPanel' no-prefetch class="nav-link">Редактирование фильмов</NuxtLink>
-          </li>
-
-          <li class="nav-item">
-            <a to='href' @click="logout" no-prefetch class="nav-link">Выйти</a>
-          </li>
-
-        </ul>
-      </div>
-    </div>
-  </nav>
-</header>
 </template>
 
 <script>

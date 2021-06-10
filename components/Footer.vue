@@ -1,15 +1,11 @@
 <template>
-
-    <footer class="bg-dark" style="">
-        <span class="text-muted"
-          >Никаких прав нету © 2021</span
-        >
-     
-    </footer>
+    <div class="bg-dark" style="">
+        <span class="text-muted">Никаких прав нету © 2021</span>
+    </div>
 </template>
 
 <style scoped>
-footer { 
+div { 
     height: 30px;
     display: flex;
     justify-content: center;
