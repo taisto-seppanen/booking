@@ -1,11 +1,13 @@
 <template>
-    <div class="contactsWrappet">
+    <div class="container contactsWrappet">
 
         <div class="gridItem">
-            <p><strong>Адрес:</strong> Первомайский проспект 2 Петрозаводск Карелия Републиц, Петрозаводск, Респ. Карелия, 185001</p>
-
-            <p><strong>Телефон:</strong> <a href="tel:8(8142)76-55-70">8(8142)76-55-70</a></p>
-            <p><strong>Социальные сети:</strong> <a href='https://vk.com/ptzkino' target="_blank"><img class="soclink" src="../assets/vk-logo.svg"/></a> </p>
+            <p><strong>Адрес:</strong>{{ contacts.adress }}</p>
+            <p><strong>Телефон:</strong> <a href="tel:8(8142)76-55-70">{{ contacts.telephone }}</a></p>
+            <p><strong>Социальные сети:</strong>
+                <a :href='contacts.vkLink' target="_blank" v-if='contacts.vkLink != ""'><img class="soclink" src="../assets/vk-logo.svg"/></a>
+                <a :href='contacts.instagramLink' target="_blank" v-if='contacts.instagramLink != ""'><img class="soclink" src="../assets/Instagram_logo.svg"/></a>
+                </p>
         </div>
 
         <div class="gridItem">
@@ -15,8 +17,40 @@
     </div>
 </template>
 
-<style scoped>
+<script>
+export default {
+    data() {
+        return {
+            contacts: {},
+        };
+    },
 
+    mounted() {
+        if (!localStorage.contacts) this.setDefaultValues();
+        if (localStorage.contacts) {
+            this.contacts = JSON.parse(localStorage.getItem("contacts"));
+        }
+        
+    },
+
+methods: {
+    async setDefaultValues() {
+
+        let defaultContacts = { 
+            adress : "Первомайский проспект 2 Петрозаводск Карелия Републиц, Петрозаводск, Респ. Карелия, 185001",
+            telephone : "8(8142)76-55-70",
+            vkLink : "https://vk.com/ptzkino",
+            instagramLink : "",
+            telegramLink : "",
+            viberLink : "",
+            }   ;
+
+        localStorage.setItem("contacts", JSON.stringify(defaultContacts));
+        },
+    },
+}
+</script>
+<style scoped>
     .contactsWrappet {
         width: 80%;
         height: 700px;
@@ -24,13 +58,11 @@
         display: grid;
         grid-template-areas: "a a" ;
     }
-
     p {
         padding: 10px;
         background: rgb(241, 241, 241);
         border-radius: 5px;
      }
-
     .gridItem {
         max-width: 500px;
         display: flex;
@@ -55,12 +87,9 @@
         .gridItem {
           max-width: 600px;
         }
-
         .map {
          width: auto;
          min-height: 450px;
      }
     }
-
-
 </style>
