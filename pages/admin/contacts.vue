@@ -62,7 +62,7 @@ export default {
         };
     },
 
-    mounted() {
+    beforeMount() {
         if (localStorage.authorization == "true") {            
         } else {
         console.log(localStorage.authorization == "true")

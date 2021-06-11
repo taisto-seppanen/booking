@@ -1,6 +1,6 @@
 <template>
     <b-container>
-        <div class="alert alert-info" role="alert">Этот раздел в разработке</div>
+        <div class="alert alert-warning" role="alert">Этот раздел в разработке</div>
     </b-container>
 </template>
 
@@ -8,7 +8,7 @@
 export default {
     layout: "admin",
 
-    mounted() {
+    beforeMount() {
         if (localStorage.authorization == "true") {            
         } else {
         console.log(localStorage.authorization == "true")
