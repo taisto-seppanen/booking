@@ -1,5 +1,15 @@
 <template>
-  <b-container>
+  <b-container class="d-flex justify-content-center">
+      <b-alert
+      :show="dismissCountDown"
+      dismissible fade
+      variant="success"
+      @dismissed="dismissCountDown=0"
+      @dismiss-count-down="countDownChanged"
+      style="position: fixed; z-index: 1;"
+    >
+      Сеанс успешно забронирован! 
+    </b-alert>
     <div>
       <b-modal id="filmmodal" title="Бронирование мест" hide-footer no-close-on-backdrop @close="clear()">
         Дата: <input type="date" id="start" v-model="currentDate" />
@@ -71,6 +81,8 @@ export default {
         booked: false,
         films: [],
         isDisableBtn: false,
+        dismissSecs: 3,
+        dismissCountDown: 0
       }
     },
 // часть имитации работы с сервером     
@@ -146,6 +158,7 @@ export default {
 // метод добавления брони
 
     addBooking() {
+      try {
       let filmIndex = this.films.map((e) => e.filmname).indexOf(this.currentFilm.filmname);
       let dateIndex = this.currentFilm.dates.map((e) => e.date).indexOf(this.currentDate);
       let sessionIndex = this.sessionsForCurrentDay.map((e) => e.time).indexOf(parseInt(this.currentTime));
@@ -156,18 +169,26 @@ export default {
       }
       const AddCurrentPlacesForSession = this.films;
       localStorage.setItem("films", JSON.stringify(AddCurrentPlacesForSession));
-
       this.clear();
+      this.showAlert();
+      } catch {}
     },
 
     // метод очистки значений
       clear() {
-        console.log("clear")
         this.currentDate = "";
         this.currentTime = "";
         this.currentFilm = "";
         this.currentPlaces = [];
         this.isDisableBtn = false;
+      },
+      
+      countDownChanged(dismissCountDown) {
+        this.dismissCountDown = dismissCountDown
+      },
+
+      showAlert() {
+        this.dismissCountDown = this.dismissSecs
       },
 
       async setDefaultValues() {
