@@ -51,10 +51,7 @@ methods: {
 }
 </script>
 <style scoped>
-    .contactsWrappet {
-        width: 80%;
-        height: 700px;
-        margin: 10px auto;
+    .container {
         display: grid;
         grid-template-areas: "a a" ;
     }
@@ -90,6 +87,7 @@ methods: {
         .map {
          width: auto;
          min-height: 450px;
+        max-height: 440px;
      }
     }
 </style>

@@ -12,11 +12,13 @@
     </b-alert>
     <div>
       <b-modal id="filmmodal" title="Бронирование мест" hide-footer no-close-on-backdrop @close="clear()">
+          <b-form inline>
+
         Дата: <input type="date" id="start" v-model="currentDate" />
         Время: <select style="width: 100px" v-model="currentTime">
                 <option :key="t.time" v-for="t in sessionsForCurrentDay"> {{t.time}} </option>
                </select>
-
+          </b-form>
               <div class="cinima" >
                <div class="cinimaDisplay">Экран</div>
                <div class="hall" style="display: grid; grid-template-columns: repeat(6, 1fr); grid-auto-flow: dense;">

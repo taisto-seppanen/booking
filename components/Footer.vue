@@ -10,8 +10,7 @@ div {
     display: flex;
     justify-content: center;
     align-items: center;
-    bottom: 0;
-    margin: 0;
+    margin-top: 50px;
     width: 100%;
     }
 </style>
