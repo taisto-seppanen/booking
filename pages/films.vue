@@ -225,19 +225,6 @@ export default {
           filmname: "Бойцовский клуб",
           dates: [
             {
-              date: "2021-06-09",
-              sessions: [
-                {
-                  time: 20,
-                  places: [],
-                },
-                {
-                  time: 22,
-                  places: [],
-                },
-              ],
-            },
-            {
               date: "2021-06-10",
               sessions: [
                 {
@@ -258,7 +245,7 @@ export default {
                   places: [],
                 },
                 {
-                  time: 23,
+                  time: 22,
                   places: [],
                 },
               ],
@@ -271,7 +258,7 @@ export default {
                   places: [],
                 },
                 {
-                  time: 22,
+                  time: 23,
                   places: [],
                 },
               ],
@@ -317,6 +304,19 @@ export default {
             },
             {
               date: "2021-06-16",
+              sessions: [
+                {
+                  time: 20,
+                  places: [],
+                },
+                {
+                  time: 22,
+                  places: [],
+                },
+              ],
+            },
+            {
+              date: "2021-06-17",
               sessions: [
                 {
                   time: 20,
@@ -340,19 +340,6 @@ export default {
           filmname: "Матрица",
           dates: [
             {
-              date: "2021-06-09",
-              sessions: [
-                {
-                  time: 16,
-                  places: [],
-                },
-                {
-                  time: 18,
-                  places: [],
-                },
-              ],
-            },
-            {
               date: "2021-06-10",
               sessions: [
                 {
@@ -443,6 +430,19 @@ export default {
                 },
               ],
             },
+            {
+              date: "2021-06-17",
+              sessions: [
+                {
+                  time: 16,
+                  places: [],
+                },
+                {
+                  time: 18,
+                  places: [],
+                },
+              ],
+            },
           ],
         },
         {
@@ -452,23 +452,6 @@ export default {
           filmdescription:
             "Богатый промышленник постоянно попадает в неприятности из-за обострённого чувства справедливости, а эксцентричный психолог, использующий в работе образ шута, решает развенчать его иллюзии о мире с помощью серии масштабных пранков",
           dates: [
-            {
-              date: "2021-06-09",
-              sessions: [
-                {
-                  time: 10,
-                  places: [],
-                },
-                {
-                  time: 12,
-                  places: [],
-                },
-                {
-                  time: 14,
-                  places: [],
-                },
-              ],
-            },
             {
               date: "2021-06-10",
               sessions: [
@@ -556,6 +539,23 @@ export default {
             },
             {
               date: "2021-06-15",
+              sessions: [
+                {
+                  time: 10,
+                  places: [],
+                },
+                {
+                  time: 12,
+                  places: [],
+                },
+                {
+                  time: 14,
+                  places: [],
+                },
+              ],
+            },
+            {
+              date: "2021-06-16",
               sessions: [
                 {
                   time: 10,
