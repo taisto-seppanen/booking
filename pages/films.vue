@@ -111,8 +111,6 @@ export default {
 // проверяем возможно ли бронирование на текущее время.
       currentTime: function () {
         this.currentPlaces= [];
-
-
         if (this.currentTime != "") {
           try {
           this.placesForCureentSession = this.sessionsForCurrentDay.find((x) => x.time == this.currentTime).places;
@@ -123,11 +121,34 @@ export default {
           this.placesForCureentSession = [];
         }
 
-        let timeNow = new Date();
-        new Date(this.currentDate.toLocaleString()).setHours(23) >=
-          timeNow.setHours(0) && this.currentTime > timeNow.getHours() + 12
-          ? (this.isDisableBtn = false)
-          : (this.isDisableBtn = true);
+
+        function format(date) {
+          var d = date.getDate();
+          var m = date.getMonth() + 1;
+          var y = date.getFullYear();
+          return '' + y + '-' + (m<=9 ? '0' + m : m) + '-' + (d <= 9 ? '0' + d : d);
+        }
+
+        var today = new Date();
+        var dateString = format(today);
+
+        if (new Date(this.currentDate) > new Date(dateString)) {
+            this.isDisableBtn = false; 
+            console.warn('выбранная дата больше текущей');
+            }
+          else if ( this.currentDate == dateString ) {
+            if (parseInt(this.currentTime) > parseInt(new Date().getHours())) {
+            console.warn('выбранное время больше текущего');
+            this.isDisableBtn = false; 
+            } else {
+              console.warn('выбранное время меньше текущего');
+              this.isDisableBtn = true; 
+              }
+            } else {
+              console.log('выбрана дата меньше текущей')
+              this.isDisableBtn = true
+            }
+
       },
 
     },
@@ -237,7 +258,7 @@ export default {
                   places: [],
                 },
                 {
-                  time: 22,
+                  time: 23,
                   places: [],
                 },
               ],
