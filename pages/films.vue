@@ -14,10 +14,10 @@
       <b-modal id="filmmodal" title="Бронирование мест" hide-footer no-close-on-backdrop @close="clear()">
           <b-form inline>
 
-        Дата: <input type="date" id="start" v-model="currentDate" />
-        Время: <select style="width: 100px" v-model="currentTime">
+        <b-form-input placeholder="Дата" type="date" id="start" v-model="currentDate" />
+        Время: <b-form-select style="width: 50%; border: grey 1px solid; margin: 5px" v-model="currentTime">
                 <option :key="t.time" v-for="t in sessionsForCurrentDay"> {{t.time}} </option>
-               </select>
+               </b-form-select>
           </b-form>
               <div class="cinima" >
                <div class="cinimaDisplay">Экран</div>
