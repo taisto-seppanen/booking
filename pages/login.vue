@@ -1,17 +1,40 @@
 <template>
-    <main>
-        <div  v-show="failLogin" class='danger'>Неверный логин или пароль</div>
-        <div class='loginWrapper'>
-            <input type="text" v-model="currentLogin" placeholder="логин">
-            <input type="password" v-model='currentPassword' placeholder="пароль">
-            <button :disabled="currentLogin == '' && currentPassword == ''" @click="authorization(currentLogin, currentPassword)">Войти</button>
-        </div>
-    </main>
+    <b-container class="d-flex justify-content-center">
+        <b-form @submit.stop.prevent='authorization(currentLogin, currentPassword)' style="width: 18rem;">
+            <b-form-group class="m-3"
+            label="Login"
+            label-for="input-1">
+                <b-form-input id="input-1" type="text" v-model="currentLogin"
+                placeholder="admin" required></b-form-input>
+            </b-form-group>
+
+        <b-form-group class="m-3"
+            label="Password"
+            label-for="input-1">
+                <b-form-input id="input-1" type="password" v-model="currentPassword"
+                placeholder="*****" required></b-form-input>
+        </b-form-group>
+
+        <b-form-group class="m-3">
+            <b-button type="submit" variant="primary">Войти</b-button>
+        </b-form-group>
+
+            <div class="alert alert-danger alert-dismissible fade show" v-if="failLogin" role="alert">
+            <strong>Неверный логин/пароль!</strong>
+
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close" @click="failLogin=false">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+        </b-form>
+    </b-container>
 </template>
 
 <script>
 
 export default {
+    layout: "empty",
+
     data() {
         return {
         currentLogin: "",
@@ -35,34 +58,3 @@ export default {
     },
 }
 </script>
-
-<style scoped>
-.danger {
-    position: absolute;
-    top: 10%;
-    background: rgba(199, 87, 87, 0.74);
-    color: black;
-    width: 500px;
-    text-align: center;
-}
-main {
-        height: 700px;
-}
-main, .loginWrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-.loginWrapper {
-    background: rgb(187, 187, 187);
-    border-radius: 10px;
-    padding: 10px;
-}
-input,
-button {
-    background: white;
-    border: black solid 1px;
-    margin: 3px;
-}
-</style>

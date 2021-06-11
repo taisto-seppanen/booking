@@ -1,7 +1,7 @@
 <template>
-    <div>
-        <h1>В разработке</h1>
-    </div>
+    <b-container>
+        <div class="alert alert-info" role="alert">Этот раздел в разработке</div>
+    </b-container>
 </template>
 
 <script>
