@@ -19,13 +19,13 @@
             <b-button type="submit" variant="primary">Войти</b-button>
         </b-form-group>
 
-            <div class="alert alert-danger alert-dismissible fade show" v-if="failLogin" role="alert">
+            <b-alert variant="danger" fade :show="failLogin" >
             <strong>Неверный логин/пароль!</strong>
 
               <button type="button" class="close" data-dismiss="alert" aria-label="Close" @click="failLogin=false">
                 <span aria-hidden="true">&times;</span>
             </button>
-            </div>
+            </b-alert>
         </b-form>
     </b-container>
 </template>
@@ -47,6 +47,7 @@ export default {
     },
     methods: {
         authorization(login, passoword) {
+            this.failLogin = false;
             if (this.currentLogin === this.adminLogin && this.currentPassword === this.adminPassword) {
                 this.$router.push('../admin/');
                 this.isAuthorization = true
