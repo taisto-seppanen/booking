@@ -1,29 +1,23 @@
 <template>
-
-
-     <div class="filmsArrayWrapper">
-      <b-card no-body class="overflow-hidden" style="max-width: 80rem; margin: 10px;" :key="news.title" v-for="news in newsArray">
+     <b-container>
+      <b-card no-body class="border border-dark" style="max-width: 80rem; margin: 10px;" :key="news.title" v-for="news in newsArray">
         <b-row no-gutters>
           <b-col md="2" style="display: flex; ">
             <b-card-img :src="news.newsPic" @error="replaceByDefault" alt="Image" class="rounded-0"></b-card-img>
           </b-col>
           <b-col md="10">
-            <b-card-body>
+            <b-card-body >
               <b-card-text>
                 <h1>{{news.newsTittle}}</h1>
                 <p>{{news.newsText}}</p>
-                <p class='newsDate'>Дата: {{ news.newsDate }}</p>
+                <p class="text-muted">Дата: {{ news.newsDate }}</p>
               </b-card-text>
             </b-card-body>
           </b-col>
         </b-row>
       </b-card>
-    </div>
-
-
+    </b-container>
 </template>
-
- 
 
 <script >
 export default {
@@ -41,7 +35,6 @@ export default {
 
 // Услонвый запрос на сервер
     methods: {
-
       replaceByDefault(e) {
        e.target.src = 'https://guwahatiplus.com/public/web/images/default-news.png';
     },
@@ -80,41 +73,8 @@ export default {
           newsText: "Doctor Who fans have always been a little different. After decades of the show being on air there’s a particular kind of devotion, excitement and sense of ownership over what began as a somewhat educational children’s programme about a time traveller, but morphed into an international brand that sometimes awkwardly straddles its dual identity.",
         },
       ];
-      localStorage.setItem("newsArray", JSON.stringify(defaultNews));
-      
-      return 
+      localStorage.setItem("newsArray", JSON.stringify(defaultNews)); 
         },
       }
     }
 </script>
-
-<style scoped>
-    .filmsArrayWrapper {
-        width: 90%;
-        margin: 0 auto;
-    }
-    .gridItem {
-        padding: 10px;
-        display: flex;
-        justify-content: center;
-        align-self: center;
-        flex-direction: column;
-    }
-    .card-body {
-        margin: 10px;
-        border-radius: 5px;
-        display: grid;
-        grid-template-areas: "a a";
-    }
-    .newsDate {
-        text-align: right;
-        color: grey;
-    }
-
-    @media (max-width: 960px) {
-        .card-body {
-          display: grid;
-          grid-template-areas: "a";
-        }
-    }
-</style>

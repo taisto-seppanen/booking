@@ -3,6 +3,7 @@
     <header>
       <Navbar />    
     </header>
+
     <main>
       <Nuxt />
     </main>
@@ -11,7 +12,6 @@
       <Footer />
     </footer>
   </div>
-
 </template>
 
 

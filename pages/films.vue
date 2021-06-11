@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <b-container>
     <div>
       <b-modal id="filmmodal" title="Бронирование мест" hide-footer no-close-on-backdrop @close="clear()">
         Дата: <input type="date" id="start" v-model="currentDate" />
@@ -32,7 +32,7 @@
 
 
     </div>
-    <div class="filmsArrayWrapper">
+    <div class="">
       <b-card no-body class="overflow-hidden" style="max-width: 80rem; margin: 10px;" :key="film.filmname" v-for="film in films">
         <b-row no-gutters>
           <b-col md="2">
@@ -51,7 +51,7 @@
       </b-card>
     </div>
 
-  </main>
+  </b-container>
 </template>
 
 
@@ -540,17 +540,13 @@ export default {
 </script>
 
 <style scoped>
-  .filmsArrayWrapper {
-    margin: 25px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+
   .card-body {
     width: 90%;
     display: flex;
     margin: 0 auto;
   }
+
   .cardWrapper{
     display: flex;
     background: rgb(241, 241, 241);
@@ -561,8 +557,8 @@ export default {
    background: darkgrey;
  }
 
-
 .cinimaDisplay { border-radius: 5px 5px 0 0;
     text-align: center;
-    background: rgb(101 93 114);}
+    background: rgb(101 93 114);
+    }
 </style>

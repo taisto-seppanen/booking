@@ -1,7 +1,6 @@
 <template>
-     <div class='about'>
+     <b-container>
      <h1>О нашем кинотеатре</h1>
-
      <div class='aboutWrapper'>
           <div class='gridItem'><img src="../assets/kalevala_1.jpg" alt="" srcset=""></div>
           <div class='gridItem'><p>
@@ -28,7 +27,7 @@
           
 
      </div>
-     </div>
+     </b-container>
 </template>
 
 <style scoped>
@@ -37,10 +36,7 @@
           background: rgb(241, 241, 241);
           border-radius: 5px;
      }
-     .about {
-          width: 80%;
-          margin: 10px auto;
-     }
+
      h1 {
           text-align: center;
           margin: 20px;
