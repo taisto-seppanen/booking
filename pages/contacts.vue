@@ -7,6 +7,8 @@
             <p><strong>Социальные сети:</strong>
                 <a :href='contacts.vkLink' target="_blank" v-if='contacts.vkLink != ""'><img class="soclink" src="../assets/vk-logo.svg"/></a>
                 <a :href='contacts.instagramLink' target="_blank" v-if='contacts.instagramLink != ""'><img class="soclink" src="../assets/Instagram_logo.svg"/></a>
+                <a :href='contacts.telegramLink' target="_blank" v-if='contacts.telegramLink != ""'><img class="soclink" src="../assets/Telegram_logo.svg"/></a>
+
                 </p>
         </div>
 

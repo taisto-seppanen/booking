@@ -35,7 +35,7 @@
                </div>
                </div>
 
-              <b-button type="button" class="mt-3" block 
+              <b-button variant="info" class="mt-3" block 
                 @click="addBooking(), $bvModal.hide('filmmodal')" :disabled="currentPlaces.length == 0 || isDisableBtn">
                   Зарезервировать
               </b-button>
@@ -55,7 +55,7 @@
               <b-card-text>
                 <h1>{{film.filmname}}</h1>
                 <p>{{film.filmdescription}}</p>
-                  <b-button v-b-modal.filmmodal @click="chooseFilm(film)">Забронировать места</b-button>
+                  <b-button v-b-modal.filmmodal @click="chooseFilm(film)" variant="info">Забронировать места</b-button>
               </b-card-text>
             </b-card-body>
           </b-col>
