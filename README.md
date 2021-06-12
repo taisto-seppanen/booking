@@ -1,20 +1,6 @@
-# booking
+This is project of cinema web cite, incudes: index page with a news, films page with booking, contact page and "about us"  page. Also implemented admin pages for redact news and contact pages. All admin pages check localStorage for authorization note.
 
-## Build Setup
+Used: Nuxt.js and BootstrapVue
+For simulate of server request i was use localStorage.
 
-```bash
-# install dependencies
-$ npm install
-
-# serve with hot reload at localhost:3000
-$ npm run dev
-
-# build for production and launch server
-$ npm run build
-$ npm run start
-
-# generate static project
-$ npm run generate
-```
-
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+You can check deploy here - [https://cinimabooking.herokuapp.com/](https://cinimabooking.herokuapp.com/) and [https://cinimabooking.herokuapp.com/login](https://cinimabooking.herokuapp.com/login). 
