@@ -42,10 +42,6 @@ export default {
         return {
         currentLogin: "",
         currentPassword: "",
-
-        adminLogin: 'admin',
-        adminPassword: 'admin',
-        isAuthorization: false,
         failLogin: false,
         }
     },
@@ -58,6 +54,8 @@ export default {
                 })
                 .catch(error => {
                     this.failLogin = true;
+                    this.currentLogin = "";
+                    this.currentPassword = "";
                 })
         }
     },

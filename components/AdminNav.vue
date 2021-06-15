@@ -22,34 +22,18 @@
 <script>
 import firebase from "firebase/app";
 import "firebase/auth";
+import Cookies from 'js-cookie';
 
 export default {
     layout: "admin",
-    data() {
-      return {
-              loggedIn: false,
-      }
-    },
 
     methods: {
       logout() {
-        // localStorage.setItem("authorization", JSON.stringify(false));
-        firebase.auth().signOut().then(() => {
-          this.$router.push
+      Cookies.remove('access_token');
+      firebase.auth().signOut().then(() => {
+          this.$router.replace({ name: 'login' })
         })
-        
       },
-
-      setupFirebase() {
-        firebase.auth().onAuthStateChanged(user => {
-          if(user){
-            this.loggedIn = true
-          } else  {
-            this.loggedIn = false
-            }          
-        })
-      }
     },
-    
 }
 </script>

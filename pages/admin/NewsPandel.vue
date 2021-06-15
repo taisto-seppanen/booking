@@ -63,10 +63,8 @@ export default {
 
   asyncData({ req, redirect }) {
     if (process.server) {
-      console.log('server', req.headers)
       const user = getUserFromCookie(req)
       if (!user) {
-        console.log('redirecting server')
         redirect('/login')
       }
     } else {
