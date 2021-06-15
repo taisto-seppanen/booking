@@ -20,13 +20,34 @@
 </template>
 
 <script>
+import firebase from "firebase/app";
+import "firebase/auth";
+
 export default {
     layout: "admin",
+    data() {
+      return {
+              loggedIn: false,
+      }
+    },
 
     methods: {
       logout() {
-        localStorage.setItem("authorization", JSON.stringify(false));
-        this.$router.push('../login/');
+        // localStorage.setItem("authorization", JSON.stringify(false));
+        firebase.auth().signOut().then(() => {
+          this.$router.push
+        })
+        
+      },
+
+      setupFirebase() {
+        firebase.auth().onAuthStateChanged(user => {
+          if(user){
+            this.loggedIn = true
+          } else  {
+            this.loggedIn = false
+            }          
+        })
       }
     },
     
