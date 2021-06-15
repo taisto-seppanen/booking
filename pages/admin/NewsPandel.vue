@@ -54,10 +54,30 @@
 </template>
 
 <script>
+import firebase from 'firebase/app'
+import 'firebase/auth'
+import { getUserFromCookie, getUserFromSession } from '@/helpers'
+
 export default {
   layout: "admin",
 
-  data() {
+  asyncData({ req, redirect }) {
+    if (process.server) {
+      console.log('server', req.headers)
+      const user = getUserFromCookie(req)
+      if (!user) {
+        console.log('redirecting server')
+        redirect('/login')
+      }
+    } else {
+      var user = firebase.auth().currentUser
+      if (!user) {
+        redirect('/login')
+      }
+    }
+  },
+
+    data() {
     return {
       newTittle: "",
       newDate: "",
@@ -68,14 +88,8 @@ export default {
     };
   },
 
-  beforeMount() {
-    this.newsArray = JSON.parse(localStorage.getItem("newsArray"));
-
-    // if (localStorage.authorization == "true") {
-    // } else {
-    //   console.log(localStorage.authorization == "true");
-    //   this.$router.push("../login/");
-    // }
+  mounted() {
+        this.newsArray = JSON.parse(localStorage.getItem("newsArray"));
   },
 
   methods: {

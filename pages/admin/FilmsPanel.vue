@@ -5,15 +5,27 @@
 </template>
 
 <script>
+import firebase from 'firebase/app'
+import 'firebase/auth'
+import { getUserFromCookie, getUserFromSession } from '@/helpers'
+
 export default {
     layout: "admin",
 
-    beforeMount() {
-        // if (localStorage.authorization == "true") {            
-        // } else {
-        // console.log(localStorage.authorization == "true")
-        // this.$router.push('../login/');
-        // }
+  asyncData({ req, redirect }) {
+    if (process.server) {
+      console.log('server', req.headers)
+      const user = getUserFromCookie(req)
+      if (!user) {
+        console.log('redirecting server')
+        redirect('/login')
+      }
+    } else {
+      var user = firebase.auth().currentUser
+      if (!user) {
+        redirect('/login')
+      }
     }
+  }
 }
 </script>
