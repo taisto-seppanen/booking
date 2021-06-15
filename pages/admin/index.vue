@@ -15,17 +15,18 @@
 </template>
 
 <script>
+
 import firebase from 'firebase/app'
 import 'firebase/auth'
+import { getUserFromCookie, getUserFromSession } from '@/helpers'
 
 export default {
-    layout: "admin",
+layout: "admin",
 
   asyncData({ req, redirect }) {
     if (process.server) {
       console.log('server', req.headers)
-      // const user = getUserFromCookie(req)
-      //   console.log('b', getUserFromCookie(req))
+      const user = getUserFromCookie(req)
       if (!user) {
         console.log('redirecting server')
         redirect('/login')
@@ -35,8 +36,9 @@ export default {
       if (!user) {
         redirect('/login')
       }
-      //   console.log($nuxt.$router)
     }
   }
 }
+
+
 </script>

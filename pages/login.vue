@@ -33,7 +33,7 @@
 <script>
 import firebase from "firebase/app";
 import "firebase/auth";
-
+import Cookies from "js-cookie";
 
 export default {
     layout: "empty",
@@ -52,12 +52,12 @@ export default {
     methods: {
         authorization(login, passoword) {
             firebase.auth().signInWithEmailAndPassword(login, passoword)
-                .then(data => {
-                console.log(data)
+                .then(data => {              
+                firebase.auth().currentUser.getIdToken(true).then(token => Cookies.set('access_token', token));
                 this.$router.replace({ name: 'admin' })
                 })
                 .catch(error => {
-                this.error = error
+                    this.failLogin = true;
                 })
         }
     },

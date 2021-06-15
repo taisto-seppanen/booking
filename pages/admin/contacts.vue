@@ -63,11 +63,11 @@ export default {
     },
 
     beforeMount() {
-        if (localStorage.authorization == "true") {            
-        } else {
-        console.log(localStorage.authorization == "true")
-        this.$router.push('../login/');
-        }
+        // if (localStorage.authorization == "true") {            
+        // } else {
+        // console.log(localStorage.authorization == "true")
+        // this.$router.push('../login/');
+        // }
         
         if (!localStorage.contacts) this.setDefaultValues();
         if (localStorage.contacts) {

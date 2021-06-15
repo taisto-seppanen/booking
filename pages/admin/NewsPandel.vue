@@ -71,11 +71,11 @@ export default {
   beforeMount() {
     this.newsArray = JSON.parse(localStorage.getItem("newsArray"));
 
-    if (localStorage.authorization == "true") {
-    } else {
-      console.log(localStorage.authorization == "true");
-      this.$router.push("../login/");
-    }
+    // if (localStorage.authorization == "true") {
+    // } else {
+    //   console.log(localStorage.authorization == "true");
+    //   this.$router.push("../login/");
+    // }
   },
 
   methods: {
