@@ -88,7 +88,6 @@ export default {
  
   mounted() {
     this.get();
-
   },
 
   methods: {
@@ -126,12 +125,11 @@ export default {
         if (snapshot.exists()) {
           this.newsArray = snapshot.val().newsArr;
         } else console.warn("bad request");
-    })
-  },
+      })
+    },
   }
 };
 </script>
 
 <style scoped>
-
 </style>

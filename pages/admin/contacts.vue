@@ -70,6 +70,7 @@ export default {
             telegramLink : '',
         };
     },
+    
     asyncData({ req, redirect }) {
         if (process.server) {
             const user = getUserFromCookie(req)
@@ -98,6 +99,7 @@ export default {
             telegramLink: this.telegramLink
             });
         },
+
         get() {
             firebase.database().ref('contacts/').get().then((snapshot) => {
                 if (snapshot.exists()) {

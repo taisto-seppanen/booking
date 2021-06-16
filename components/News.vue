@@ -21,7 +21,6 @@
 
 <script >
 import firebase from 'firebase/app'
-
 export default {
     data() {
         return {
@@ -31,13 +30,10 @@ export default {
     mounted() {
       this.get()
     },
-
-// Услонвый запрос на сервер
     methods: {
       replaceByDefault(e) {
        e.target.src = 'https://guwahatiplus.com/public/web/images/default-news.png';
     },
-
     get() {
       firebase.database().ref('news/').get().then((snapshot) => {
         if (snapshot.exists()) {
