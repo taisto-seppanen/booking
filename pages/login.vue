@@ -31,6 +31,9 @@
 </template>
 
 <script>
+import firebase from "firebase/app";
+import "firebase/auth";
+import Cookies from "js-cookie";
 
 export default {
     layout: "empty",
@@ -39,22 +42,21 @@ export default {
         return {
         currentLogin: "",
         currentPassword: "",
-        adminLogin: 'admin',
-        adminPassword: 'admin',
-        isAuthorization: false,
         failLogin: false,
         }
     },
     methods: {
         authorization(login, passoword) {
-            this.failLogin = false;
-            if (this.currentLogin === this.adminLogin && this.currentPassword === this.adminPassword) {
-                this.$router.push('../admin/');
-                this.isAuthorization = true
-                localStorage.setItem("authorization", JSON.stringify(this.isAuthorization));
-            } else {
-                  this.failLogin = true;
-            }
+            firebase.auth().signInWithEmailAndPassword(login, passoword)
+                .then(data => {              
+                firebase.auth().currentUser.getIdToken(true).then(token => Cookies.set('access_token', token));
+                this.$router.replace({ name: 'admin' })
+                })
+                .catch(error => {
+                    this.failLogin = true;
+                    this.currentLogin = "";
+                    this.currentPassword = "";
+                })
         }
     },
 }

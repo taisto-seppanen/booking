@@ -20,15 +20,20 @@
 </template>
 
 <script>
+import firebase from "firebase/app";
+import "firebase/auth";
+import Cookies from 'js-cookie';
+
 export default {
     layout: "admin",
 
     methods: {
       logout() {
-        localStorage.setItem("authorization", JSON.stringify(false));
-        this.$router.push('../login/');
-      }
+      Cookies.remove('access_token');
+      firebase.auth().signOut().then(() => {
+          this.$router.replace({ name: 'login' })
+        })
+      },
     },
-    
 }
 </script>

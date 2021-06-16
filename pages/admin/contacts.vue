@@ -53,6 +53,10 @@
 </template>
 
 <script>
+import firebase from 'firebase/app'
+import 'firebase/auth'
+import { getUserFromCookie, getUserFromSession } from '@/helpers'
+
 export default {
     layout: "admin",
 
@@ -62,23 +66,31 @@ export default {
         };
     },
 
-    beforeMount() {
-        if (localStorage.authorization == "true") {            
+    asyncData({ req, redirect }) {
+        if (process.server) {
+            const user = getUserFromCookie(req)
+            if (!user) {
+                redirect('/login')
+            }
         } else {
-        console.log(localStorage.authorization == "true")
-        this.$router.push('../login/');
+        var user = firebase.auth().currentUser
+        if (!user) {
+            redirect('/login')
         }
-        
+    }
+  },
+
+    beforeMount() {
         if (!localStorage.contacts) this.setDefaultValues();
         if (localStorage.contacts) {
             this.contacts = JSON.parse(localStorage.getItem("contacts"));
         }
     },
 
-methods: {
-    save () {
-    localStorage.setItem("contacts", JSON.stringify(this.contacts));
-    },
+    methods: {
+        save () {
+        localStorage.setItem("contacts", JSON.stringify(this.contacts));
+        },
 
     async setDefaultValues() {
         let defaultContacts = { 
