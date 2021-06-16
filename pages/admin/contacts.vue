@@ -6,7 +6,7 @@
             label="Адрес:"
             label-for="input-1"
             description="город, улица, дом, индекс">
-                <b-form-input id="input-1" type="text" v-model="contacts.adress"
+                <b-form-input id="input-1" type="text" v-model="adress"
                 placeholder="Адрес" required></b-form-input>
         </b-form-group>
 
@@ -15,7 +15,7 @@
             label="Телефонный номер:"
             label-for="input-1"
             description="в формате 8(8412)757-757">
-                <b-form-input id="input-1" type="text" v-model="contacts.telephone"
+                <b-form-input id="input-1" type="text" v-model="telephone"
                 placeholder="телефон" required></b-form-input>
         </b-form-group>
 
@@ -24,7 +24,7 @@
             label="Ссылка на вк:"
             label-for="input-1"
             description="Например https://vk.com/lololo">
-                <b-form-input id="input-1" type="text" v-model="contacts.vkLink"
+                <b-form-input id="input-1" type="text" v-model="vkLink"
                 placeholder="ссылка" required></b-form-input>
         </b-form-group>
 
@@ -33,7 +33,7 @@
             label="Ссылка на инстаграм:"
             label-for="input-1"
             description="Например https://www.instagram.com/lindemannofficial/">
-                <b-form-input id="input-1" type="text" v-model='contacts.instagramLink'
+                <b-form-input id="input-1" type="text" v-model='instagramLink'
                 placeholder="ссылка" ></b-form-input>
         </b-form-group>
 
@@ -42,7 +42,7 @@
             label="Ссылка на телеграмм:"
             label-for="input-1"
             description="Например https://t.me/taisto_seppanen">
-                <b-form-input id="input-1" type="text" v-model='contacts.telegramLink'
+                <b-form-input id="input-1" type="text" v-model='telegramLink'
                 placeholder="ссылка" ></b-form-input>
         </b-form-group>     
 
@@ -57,15 +57,19 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import { getUserFromCookie, getUserFromSession } from '@/helpers'
 
+
 export default {
     layout: "admin",
 
     data() {
         return {
-            contacts: {},
+            adress : '',
+            telephone : '',
+            vkLink : '',
+            instagramLink : '',
+            telegramLink : '',
         };
     },
-
     asyncData({ req, redirect }) {
         if (process.server) {
             const user = getUserFromCookie(req)
@@ -81,26 +85,31 @@ export default {
   },
 
     beforeMount() {
-        if (!localStorage.contacts) this.setDefaultValues();
-        if (localStorage.contacts) {
-            this.contacts = JSON.parse(localStorage.getItem("contacts"));
-        }
+        this.get();
     },
 
     methods: {
-        save () {
-        localStorage.setItem("contacts", JSON.stringify(this.contacts));
+        save() {
+            firebase.database().ref('contacts/').set({
+            adress: this.adress,
+            telephone: this.telephone,
+            vkLink: this.vkLink,
+            instagramLink: this.instagramLink,
+            telegramLink: this.telegramLink
+            });
         },
-
-    async setDefaultValues() {
-        let defaultContacts = { 
-            adress : "Первомайский проспект 2 Петрозаводск Карелия Републиц, Петрозаводск, Респ. Карелия, 185001",
-            telephone : "8(8142)76-55-70",
-            vkLink : "https://vk.com/ptzkino",
-            instagramLink : "",
-            telegramLink : "",
-            };
-        localStorage.setItem("contacts", JSON.stringify(defaultContacts));
+        get() {
+            firebase.database().ref('contacts/').get().then((snapshot) => {
+                if (snapshot.exists()) {
+                    this.adress = snapshot.val().adress;
+                    this.telephone = snapshot.val().telephone;
+                    this.vkLink = snapshot.val().vkLink;
+                    this.instagramLink = snapshot.val().instagramLink;
+                    this.telegramLink = snapshot.val().telegramLink;
+                } else {
+                    console.warn("bad request")
+                }
+            })
         },
     },
 }
