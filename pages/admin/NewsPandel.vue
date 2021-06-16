@@ -45,7 +45,7 @@
 
     <b-list-group class="m-3">
       <h3>Список новостей:</h3>
-      <b-list-group-item :key="news.newsTittle" v-for="news in newsArray">
+      <b-list-group-item :key="news.newsTittle" v-for="news in newsArray.reverse()">
         {{ news.newsTittle }}
         <b-button-close style="color: red" @click.stop.prevent="delteCurrentNews(news)"></b-button-close>
       </b-list-group-item>
@@ -85,9 +85,10 @@ export default {
       isVisible: false
     };
   },
-
+ 
   mounted() {
-        this.newsArray = JSON.parse(localStorage.getItem("newsArray"));
+    this.get();
+
   },
 
   methods: {
@@ -106,7 +107,7 @@ export default {
       });
       this.clear();
       this.isVisible = false;
-      this.save();
+      this.save(this.newsArray);
     },
 
     clear() {
@@ -116,10 +117,17 @@ export default {
       this.newPicLink = "";
     },
 
-    save() {
-      const newNewsArray = this.newsArray;
-      localStorage.setItem("newsArray", JSON.stringify(newNewsArray));
-    }
+    save(newsArr) {
+      firebase.database().ref('news/').set({ newsArr });
+    },
+
+    get() {
+    firebase.database().ref('news/').get().then((snapshot) => {
+        if (snapshot.exists()) {
+          this.newsArray = snapshot.val().newsArr;
+        } else console.warn("bad request");
+    })
+  },
   }
 };
 </script>
