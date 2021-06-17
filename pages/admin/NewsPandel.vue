@@ -45,7 +45,7 @@
 
     <b-list-group class="m-3">
       <h3>Список новостей:</h3>
-      <b-list-group-item :key="news.newsTittle" v-for="news in newsArray.reverse()">
+      <b-list-group-item :key="news.newsTittle" v-for="news in newsArray">
         {{ news.newsTittle }}
         <b-button-close style="color: red" @click.stop.prevent="delteCurrentNews(news)"></b-button-close>
       </b-list-group-item>
@@ -93,7 +93,7 @@ export default {
   methods: {
     delteCurrentNews(news) {
         this.newsArray.splice(this.newsArray.indexOf(news), 1);
-        this.save();
+        this.save(this.newsArray);
     },
 
     addNews() {
