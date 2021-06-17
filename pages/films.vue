@@ -28,7 +28,7 @@
                    v-for="number in 36"
                    :key="number"
                    @click="clickOnSeat(number)"
-                   :disabled="isDisableBtn || placesForCureentSession.indexOf(number) != -1 || currentTime ==''"
+                   :disabled="isDisableBtn ||  currentTime ==''"
                  >
                    {{number}}
                  </b-button>
@@ -69,6 +69,10 @@
 
 
 <script>
+import firebase from "firebase/app";
+import "firebase/database";
+var database = firebase.database();
+
 export default {
     data() {
       return {
@@ -89,10 +93,7 @@ export default {
     },
 // часть имитации работы с сервером     
     mounted() {
-        if (!localStorage.films) this.setDefaultValues();
-        if (localStorage.films) {
-        this.films = JSON.parse(localStorage.getItem("films"));
-        }
+      this.get();
     },
 
     watch: {
@@ -111,7 +112,8 @@ export default {
 // проверяем возможно ли бронирование на текущее время.
       currentTime: function () {
         this.currentPlaces= [];
-        if (this.currentTime != "") {
+
+        if (this.currentTime != ""  ) {
           try {
           this.placesForCureentSession = this.sessionsForCurrentDay.find((x) => x.time == this.currentTime).places;
           } catch(error) {
@@ -191,7 +193,8 @@ export default {
         this.films[filmIndex].dates[dateIndex].sessions[sessionIndex].places.push(parseInt(x));
       }
       const AddCurrentPlacesForSession = this.films;
-      localStorage.setItem("films", JSON.stringify(AddCurrentPlacesForSession));
+
+      this.save(AddCurrentPlacesForSession);
       this.clear();
       this.showAlert();
       } catch {}
@@ -214,370 +217,26 @@ export default {
         this.dismissCountDown = this.dismissSecs
       },
 
-      async setDefaultValues() {
-      let newfilm = [
-       {
-          filmpic:
-            "https://kuda-spb.ru//uploads/190628165505643.jpg",
-          filmdescription:
-            "Разовые порции сахара, сливок, разовые порции масла, полуфабрикаты для микроволновки, мини наборы шампуня и кондиционера, микроскопические кремы, крохотные кусочки мыла. Люди, встречающиеся мне во время перелетов, — одноразовые друзья! Мы проводим вместе время от взлета до посадки и не более того...",
-          id: 0,
-          filmname: "Бойцовский клуб",
-          dates: [
-            {
-              date: "2021-06-10",
-              sessions: [
-                {
-                  time: 20,
-                  places: [],
-                },
-                {
-                  time: 22,
-                  places: [],
-                },
-              ],
-            },
-            {
-              date: "2021-06-11",
-              sessions: [
-                {
-                  time: 20,
-                  places: [],
-                },
-                {
-                  time: 22,
-                  places: [],
-                },
-              ],
-            },
-            {
-              date: "2021-06-12",
-              sessions: [
-                {
-                  time: 20,
-                  places: [],
-                },
-                {
-                  time: 23,
-                  places: [],
-                },
-              ],
-            },
-            {
-              date: "2021-06-13",
-              sessions: [
-                {
-                  time: 20,
-                  places: [],
-                },
-                {
-                  time: 22,
-                  places: [],
-                },
-              ],
-            },
-            {
-              date: "2021-06-14",
-              sessions: [
-                {
-                  time: 20,
-                  places: [],
-                },
-                {
-                  time: 22,
-                  places: [],
-                },
-              ],
-            },
-            {
-              date: "2021-06-15",
-              sessions: [
-                {
-                  time: 20,
-                  places: [],
-                },
-                {
-                  time: 22,
-                  places: [],
-                },
-              ],
-            },
-            {
-              date: "2021-06-16",
-              sessions: [
-                {
-                  time: 20,
-                  places: [],
-                },
-                {
-                  time: 22,
-                  places: [],
-                },
-              ],
-            },
-            {
-              date: "2021-06-17",
-              sessions: [
-                {
-                  time: 20,
-                  places: [],
-                },
-                {
-                  time: 22,
-                  places: [],
-                },
-              ],
-            },
-          ],
-        },
+      save(newfilm) {
+        console.warn('#### SAVING');
+        console.warn(newfilm);
+        firebase.database().ref('films/').set({newfilm});
+      },
 
-        {
-          filmpic:
-            "https://upload.wikimedia.org/wikipedia/ru/9/9d/Matrix-DVD.jpg",
-          filmdescription:
-            "Живет на свете обычный хакер Нео и даже не подозревает, что этот мир – всего лишь симуляция, созданная зловещими машинами, а он сам – тот самый Избранный, которому подвластно подчинить себе Матрицу. Чтобы вырваться из сна в настоящую реальность, он присоединяется к повстанцам и начинает гнуть ложки глазами",
-          id: 0,
-          filmname: "Матрица",
-          dates: [
-            {
-              date: "2021-06-10",
-              sessions: [
-                {
-                  time: 16,
-                  places: [],
-                },
-                {
-                  time: 18,
-                  places: [],
-                },
-              ],
-            },
-            {
-              date: "2021-06-11",
-              sessions: [
-                {
-                  time: 16,
-                  places: [],
-                },
-                {
-                  time: 18,
-                  places: [],
-                },
-              ],
-            },
-            {
-              date: "2021-06-12",
-              sessions: [
-                {
-                  time: 16,
-                  places: [],
-                },
-                {
-                  time: 18,
-                  places: [],
-                },
-              ],
-            },
-            {
-              date: "2021-06-13",
-              sessions: [
-                {
-                  time: 16,
-                  places: [],
-                },
-                {
-                  time: 18,
-                  places: [],
-                },
-              ],
-            },
-            {
-              date: "2021-06-14",
-              sessions: [
-                {
-                  time: 16,
-                  places: [],
-                },
-                {
-                  time: 18,
-                  places: [],
-                },
-              ],
-            },
-            {
-              date: "2021-06-15",
-              sessions: [
-                {
-                  time: 16,
-                  places: [],
-                },
-                {
-                  time: 18,
-                  places: [],
-                },
-              ],
-            },
-            {
-              date: "2021-06-16",
-              sessions: [
-                {
-                  time: 16,
-                  places: [],
-                },
-                {
-                  time: 18,
-                  places: [],
-                },
-              ],
-            },
-            {
-              date: "2021-06-17",
-              sessions: [
-                {
-                  time: 16,
-                  places: [],
-                },
-                {
-                  time: 18,
-                  places: [],
-                },
-              ],
-            },
-          ],
-        },
-        {
-          filmname: "Тёмный рыцарь",
-          id: 1,
-          filmpic: "https://i.redomm.ru/AAfb0OBJDTdl-r1275x900.jpg",
-          filmdescription:
-            "Богатый промышленник постоянно попадает в неприятности из-за обострённого чувства справедливости, а эксцентричный психолог, использующий в работе образ шута, решает развенчать его иллюзии о мире с помощью серии масштабных пранков",
-          dates: [
-            {
-              date: "2021-06-10",
-              sessions: [
-                {
-                  time: 10,
-                  places: [],
-                },
-                {
-                  time: 12,
-                  places: [],
-                },
-                {
-                  time: 14,
-                  places: [],
-                },
-              ],
-            },
-            {
-              date: "2021-06-11",
-              sessions: [
-                {
-                  time: 10,
-                  places: [],
-                },
-                {
-                  time: 12,
-                  places: [],
-                },
-                {
-                  time: 14,
-                  places: [],
-                },
-              ],
-            },
-            {
-              date: "2021-06-12",
-              sessions: [
-                {
-                  time: 10,
-                  places: [],
-                },
-                {
-                  time: 12,
-                  places: [],
-                },
-                {
-                  time: 14,
-                  places: [],
-                },
-              ],
-            },
-            {
-              date: "2021-06-13",
-              sessions: [
-                {
-                  time: 10,
-                  places: [],
-                },
-                {
-                  time: 12,
-                  places: [],
-                },
-                {
-                  time: 14,
-                  places: [],
-                },
-              ],
-            },
-            {
-              date: "2021-06-14",
-              sessions: [
-                {
-                  time: 10,
-                  places: [],
-                },
-                {
-                  time: 12,
-                  places: [],
-                },
-                {
-                  time: 14,
-                  places: [],
-                },
-              ],
-            },
-            {
-              date: "2021-06-15",
-              sessions: [
-                {
-                  time: 10,
-                  places: [],
-                },
-                {
-                  time: 12,
-                  places: [],
-                },
-                {
-                  time: 14,
-                  places: [],
-                },
-              ],
-            },
-            {
-              date: "2021-06-16",
-              sessions: [
-                {
-                  time: 10,
-                  places: [],
-                },
-                {
-                  time: 12,
-                  places: [],
-                },
-                {
-                  time: 14,
-                  places: [],
-                },
-              ],
-            },
-          ],
-        },
-      ];
-      localStorage.setItem("films", JSON.stringify(newfilm));
-      
-      return 
-        },
+      async get() {
+        console.warn('azaza');
+          await firebase.database().ref('films/').get().then((snapshot) => {
+              if (snapshot.exists()) {
+
+                  this.films = snapshot.val().newfilm;
+
+                  console.warn(this.films);
+
+              } else {
+                  console.warn("bad request")
+              }
+           })
+      },
       }
     };
 
