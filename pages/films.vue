@@ -28,7 +28,7 @@
                    v-for="number in 36"
                    :key="number"
                    @click="clickOnSeat(number)"
-                   :disabled="isDisableBtn ||  currentTime ==''"
+                   :disabled="isDisableBtn || placesForCureentSession.indexOf(number) != -1 || currentTime ==''"
                  >
                    {{number}}
                  </b-button>
@@ -62,11 +62,8 @@
         </b-row>
       </b-card>
     </div>
-
   </b-container>
 </template>
-
-
 
 <script>
 import firebase from "firebase/app";
@@ -91,13 +88,11 @@ export default {
         dismissCountDown: 0
       }
     },
-// часть имитации работы с сервером     
     mounted() {
       this.get();
     },
 
     watch: {
-//следим за изменениями выбора даты
       currentDate: function () {
       this.currentTime = "";
       this.currentPlaces= [];
@@ -108,8 +103,6 @@ export default {
         this.getSessionsList();
       },
 
-// Следим за временем
-// проверяем возможно ли бронирование на текущее время.
       currentTime: function () {
         this.currentPlaces= [];
 
@@ -123,7 +116,6 @@ export default {
           this.placesForCureentSession = [];
         }
 
-
         function format(date) {
           var d = date.getDate();
           var m = date.getMonth() + 1;
@@ -136,32 +128,24 @@ export default {
 
         if (new Date(this.currentDate) > new Date(dateString)) {
             this.isDisableBtn = false; 
-            console.warn('выбранная дата больше текущей');
             }
           else if ( this.currentDate == dateString ) {
             if (parseInt(this.currentTime) > parseInt(new Date().getHours())) {
-            console.warn('выбранное время больше текущего');
             this.isDisableBtn = false; 
             } else {
-              console.warn('выбранное время меньше текущего');
               this.isDisableBtn = true; 
               }
             } else {
-              console.log('выбрана дата меньше текущей')
               this.isDisableBtn = true
             }
-
       },
-
     },
 
     methods: {
-// метод выбора фильма
       chooseFilm(film) {
         this.currentFilm = film;
       },
 
-// метод получения списка сеансов
       getSessionsList() {
         if (this.isDateSelected == true) {
           try {
@@ -172,35 +156,28 @@ export default {
           }
       },
 
-// обработка выбора мест
-      clickOnSeat(index) {
+    clickOnSeat(index) {
         if (this.currentPlaces.indexOf(index) != -1) {this.currentPlaces.splice(this.currentPlaces.indexOf(index), 1);
         } else {
           this.currentPlaces.push(index);
         }
       },
 
-// метод добавления брони
-
     addBooking() {
       try {
       let filmIndex = this.films.map((e) => e.filmname).indexOf(this.currentFilm.filmname);
       let dateIndex = this.currentFilm.dates.map((e) => e.date).indexOf(this.currentDate);
       let sessionIndex = this.sessionsForCurrentDay.map((e) => e.time).indexOf(parseInt(this.currentTime));
-
       for (let x of this.currentPlaces) {
-
         this.films[filmIndex].dates[dateIndex].sessions[sessionIndex].places.push(parseInt(x));
       }
       const AddCurrentPlacesForSession = this.films;
-
       this.save(AddCurrentPlacesForSession);
       this.clear();
       this.showAlert();
       } catch {}
     },
 
-    // метод очистки значений
       clear() {
         this.currentDate = "";
         this.currentTime = "";
@@ -217,29 +194,22 @@ export default {
         this.dismissCountDown = this.dismissSecs
       },
 
-      save(newfilm) {
-        console.warn('#### SAVING');
-        console.warn(newfilm);
-        firebase.database().ref('films/').set({newfilm});
+      async save(newfilm) {
+        await firebase.database().ref('films/').set({newfilm});
       },
 
       async get() {
-        console.warn('azaza');
           await firebase.database().ref('films/').get().then((snapshot) => {
               if (snapshot.exists()) {
-
                   this.films = snapshot.val().newfilm;
-
                   console.warn(this.films);
-
               } else {
                   console.warn("bad request")
               }
            })
-      },
+        },
       }
     };
-
 </script>
 
 <style scoped>
