@@ -125,19 +125,30 @@ export default {
     },
 
     addSession() {
-
       let filmIndex = this.films.map((e) => e.filmname).indexOf(this.currentFilm.filmname);
-      if (this.films[filmIndex].dates)
-      this.films[filmIndex].dates.push({
-        date: this.newSessionDate,
-        sessions: {
-          places: { 0: 0},
-          time: this.newSessionTime
-        }
-      })
+      let dateIndex = -1;
+      try {
+        dateIndex = this.currentFilm.dates.map((e) => e.date).indexOf(this.newSessionDate);
+      } catch(e) {
+        console.warn("dont panic its ok " + e)
+      }
+      if (dateIndex != -1) {
+        console.warn(this.films[filmIndex].dates[dateIndex].sessions)
+
+        let id = this.films[filmIndex].dates[dateIndex].length;
+
+        this.films[filmIndex].dates[dateIndex].sessions.push({places: { 0 : 0 }, time: this.newSessionTime});
+
+      } else {
+
+        this.films[filmIndex].dates.push({
+          date: this.newSessionDate,
+            sessions: [ { time : this.newSessionTime, places : [0]} ]
+        })
+        
+      }
 
       this.save(this.films);
-      console.warn(this.films[filmIndex])
     },
 
     clear(){
