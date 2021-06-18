@@ -195,11 +195,11 @@ export default {
       },
 
       async save(newfilm) {
-        await firebase.database().ref('films/').set({newfilm});
+        await firebase.database().ref('/').set({newfilm});
       },
 
       async get() {
-          await firebase.database().ref('films/').get().then((snapshot) => {
+          await firebase.database().ref('/').get().then((snapshot) => {
               if (snapshot.exists()) {
                   this.films = snapshot.val().newfilm;
                   console.warn(this.films);
