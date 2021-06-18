@@ -167,15 +167,24 @@ export default {
       try {
       let filmIndex = this.films.map((e) => e.filmname).indexOf(this.currentFilm.filmname);
       let dateIndex = this.currentFilm.dates.map((e) => e.date).indexOf(this.currentDate);
-      let sessionIndex = this.sessionsForCurrentDay.map((e) => e.time).indexOf(parseInt(this.currentTime));
+      let sessionIndex = this.sessionsForCurrentDay.map((e) => e.time).indexOf(this.currentTime);
+
+      if (this.films[filmIndex].dates[dateIndex].sessions[sessionIndex].places) {
+      this.films[filmIndex].dates[dateIndex].sessions[sessionIndex].places = this.currentPlaces;
+      } else {
       for (let x of this.currentPlaces) {
         this.films[filmIndex].dates[dateIndex].sessions[sessionIndex].places.push(parseInt(x));
-      }
+      }}
+
       const AddCurrentPlacesForSession = this.films;
       this.save(AddCurrentPlacesForSession);
       this.clear();
       this.showAlert();
-      } catch {}
+
+      } catch(e) {
+        this.clear();
+        console.error(e)
+      }
     },
 
       clear() {
@@ -202,7 +211,6 @@ export default {
           await firebase.database().ref('/').get().then((snapshot) => {
               if (snapshot.exists()) {
                   this.films = snapshot.val().newfilm;
-                  console.warn(this.films);
               } else {
                   console.warn("bad request")
               }
