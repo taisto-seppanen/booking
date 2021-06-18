@@ -37,8 +37,8 @@
     </b-form>
 
       <b-list-group class="m-3">
-      <h3>Список новостей:</h3>
-      <b-list-group-item :key="film.filmname" v-for="film in films">
+      <h3>Список фильмов:</h3>
+      <b-list-group-item :key="film.filmname" v-for="film in films" style="display: flex; justify-content: space-between;">
         {{ film.filmname }}
 
         <b-button v-b-modal.filmmodal @click="chooseFilm(film)" variant="info">Добавить сеанс</b-button>
