@@ -125,8 +125,9 @@ export default {
     },
 
     addSession() {
-      
+
       let filmIndex = this.films.map((e) => e.filmname).indexOf(this.currentFilm.filmname);
+      if (this.films[filmIndex].dates)
       this.films[filmIndex].dates.push({
         date: this.newSessionDate,
         sessions: {
