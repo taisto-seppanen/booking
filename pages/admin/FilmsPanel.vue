@@ -40,12 +40,32 @@
       <h3>Список новостей:</h3>
       <b-list-group-item :key="film.filmname" v-for="film in films">
         {{ film.filmname }}
-        <b-button-close style="color: red" @click.stop.prevent=""></b-button-close>
+
+        <b-button v-b-modal.filmmodal @click="chooseFilm(film)" variant="info">Добавить сеанс</b-button>
+  
+        <!-- <b-button-close style="color: red" @click.stop.prevent=""></b-button-close> -->
       </b-list-group-item>
     </b-list-group>
 
+<!-- модалка -->
+
+      <b-modal id="filmmodal" title="Добавление сеанса" hide-footer no-close-on-backdrop @close="clear()">
+          <b-form @submit.stop.prevent='save'>
+          <p>Дата: {{newSessionDate}}</p>
+          <b-form-input placeholder="Дата" type="date" id="start" v-model="newSessionDate" />
+          <p>Время: {{newSessionTime}}</p>          
+          <b-form-input style='width: 100%;' type="range" min="0" max="23" v-model="newSessionTime"></b-form-input>
+        </b-form>
+
+        <b-button variant="info" class="mt-3" block 
+          @click="addSession(), $bvModal.hide('filmmodal')" :disabled="newSessionDate == '' && newSessionTime == ''">
+          Создать
+        </b-button>
+
+      </b-modal>
     </b-container>
 </template>
+
 
 <script>
 import firebase from 'firebase/app'
@@ -75,7 +95,10 @@ export default {
       filmdescription: '',
       filmpic: '',
       films: [],
-      isVisible: false
+      isVisible: false,
+      currentFilm: '',
+      newSessionDate: '',
+      newSessionTime: '',
     }
   },
 
@@ -85,9 +108,11 @@ export default {
 
   methods: {
 
-     addFilm () {
-      console.warn('adding into array');
-      
+    chooseFilm(film) {
+    this.currentFilm = film;
+    },
+
+    addFilm () {
       this.films.push({
         filmname: this.filmname,
         filmdescription: this.filmdescription,
@@ -99,15 +124,32 @@ export default {
       this.get();
     },
 
+    addSession() {
+      
+      let filmIndex = this.films.map((e) => e.filmname).indexOf(this.currentFilm.filmname);
+      this.films[filmIndex].dates.push({
+        date: this.newSessionDate,
+        sessions: {
+          places: { 0: 0},
+          time: this.newSessionTime
+        }
+      })
+
+      this.save(this.films);
+      console.warn(this.films[filmIndex])
+    },
+
     clear(){
       this.isVisible = false;
       this.filmname = '';
       this.filmdescription = '';
       this.filmpic = '';
+      this.currentFilm = '';
+      this.newSessionDate = '';
+      this.newSessionTime = '';
     },
 
     async save(newfilm) {
-        console.warn('sending to db')
         await firebase.database().ref('/').set({ newfilm });
     },
     
