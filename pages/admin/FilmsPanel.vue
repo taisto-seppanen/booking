@@ -94,6 +94,7 @@ export default {
         filmname: this.filmname,
         filmdescription: this.filmdescription,
         filmpic: this.filmpic,
+        dates: []
       });
       this.save(this.films);
       this.clear();
@@ -108,8 +109,11 @@ export default {
       } catch(e) {
         console.warn("dont panic its ok " + e)
       }
+
       if (dateIndex != -1) {
         this.films[filmIndex].dates[dateIndex].sessions.push({places: { 0 : 0 }, time: this.newSessionTime});
+                console.warn('true!!!!!')
+
       } else {
         this.films[filmIndex].dates.push({
           date: this.newSessionDate,
@@ -130,11 +134,11 @@ export default {
     },
 
     async save(newfilm) {
-        await firebase.database().ref('/').set({ newfilm });
+        await firebase.database().ref('films/').set({ newfilm });
     },
     
     async get() {
-      await firebase.database().ref('/').get().then((snapshot) => {
+      await firebase.database().ref('films/').get().then((snapshot) => {
       if (snapshot.exists()) {
           this.films = snapshot.val().newfilm;
       } else {

@@ -137,27 +137,27 @@ export default {
           try {
             this.sessionsForCurrentDay = this.currentFilm.dates.find((day) => day.date === this.currentDate).sessions;
           } catch (error) {console.warn(`Don't panic, it's ok! ${error}`)}
-          } else {
-            this.sessionsForCurrentDay = [];
-          }
+          } else { this.sessionsForCurrentDay = []; }
       },
 
     clickOnSeat(index) {
         if (this.currentPlaces.indexOf(index) != -1) {this.currentPlaces.splice(this.currentPlaces.indexOf(index), 1);
-        } else {
-          this.currentPlaces.push(index);
-        }
+        } else { this.currentPlaces.push(index); }
       },
 
     addBooking() {
       try {
-      let filmIndex = this.films.map((e) => e.filmname).indexOf(this.currentFilm.filmname);
+      console.warn(this.films);
+      let filmIndex = Array.from(this.films).map((e) => e.filmname).indexOf(this.currentFilm.filmname);
+
       let dateIndex = this.currentFilm.dates.map((e) => e.date).indexOf(this.currentDate);
       let sessionIndex = this.sessionsForCurrentDay.map((e) => e.time).indexOf(this.currentTime);
 
-      if (this.films[filmIndex].dates[dateIndex].sessions[sessionIndex].places) {
+      if (!this.films[filmIndex].dates[dateIndex].sessions[sessionIndex].places) {
       this.films[filmIndex].dates[dateIndex].sessions[sessionIndex].places = this.currentPlaces;
+        console.warn('add true');
       } else {
+        console.warn('add else');
       for (let x of this.currentPlaces) {
         this.films[filmIndex].dates[dateIndex].sessions[sessionIndex].places.push(parseInt(x));
       }}
@@ -173,34 +173,34 @@ export default {
       }
     },
 
-      clear() {
-        this.currentDate = "";
-        this.currentTime = "";
-        this.currentFilm = "";
-        this.currentPlaces = [];
-        this.isDisableBtn = false;
-      },
+    clear() {
+      this.currentDate = "";
+      this.currentTime = "";
+      this.currentFilm = "";
+      this.currentPlaces = [];
+      this.isDisableBtn = false;
+    },
       
-      countDownChanged(dismissCountDown) {
-        this.dismissCountDown = dismissCountDown
-      },
+    countDownChanged(dismissCountDown) {
+      this.dismissCountDown = dismissCountDown
+    },
 
-      showAlert() {
-        this.dismissCountDown = this.dismissSecs
-      },
+    showAlert() {
+      this.dismissCountDown = this.dismissSecs
+    },
 
-      async save(newfilm) {
-        await firebase.database().ref('/').set({newfilm});
-      },
+    async save(newfilm) {
+      await firebase.database().ref('/films/').set({newfilm});
+    },
 
-      async get() {
-          await firebase.database().ref('/').get().then((snapshot) => {
-              if (snapshot.exists()) {
-                  this.films = snapshot.val().newfilm;
-              } else {
-                  console.warn("bad request")
-              }
-           })
+    async get() {
+      await firebase.database().ref('/films').get().then((snapshot) => {
+        if (snapshot.exists()) {
+            this.films = snapshot.val().newfilm;
+        } else {
+            console.warn("bad request")
+        }
+       })
         },
       }
     };
