@@ -1,44 +1,24 @@
 <template>
   <b-container>
     <h1>Редактирование новостей</h1>
-
     <b-button variant="primary" @click="isVisible = !isVisible">Добавить новость</b-button>
-
     <b-form v-if="isVisible" @submit.stop.prevent="addNews" class="m-3">
+      <b-form-group class="m-3" id="input-group-1" label="Заголовок" label-for="input-1">
+        <b-form-input id="input-1" type="text" v-model="newTittle" placeholder="" required></b-form-input>
+      </b-form-group>
 
-                <b-form-group class="m-3"
-            id="input-group-1"
-            label="Заголовок"
-            label-for="input-1">
-                <b-form-input id="input-1" type="text" v-model="newTittle"
-                placeholder="" required></b-form-input>
-        </b-form-group>
+      <b-form-group class="m-3" id="input-group-1" label="Дата" label-for="input-1">
+        <b-form-input id="input-1" type="date" v-model="newDate" placeholder="" required></b-form-input>
+      </b-form-group>
 
-                <b-form-group class="m-3"
-            id="input-group-1"
-            label="Дата"
-            label-for="input-1">
-                <b-form-input id="input-1" type="date" v-model="newDate"
-                placeholder="" required></b-form-input>
-        </b-form-group>
+      <b-form-group class="m-3" id="input-group-1" label="Текст новости" label-for="input-1">
+        <b-form-input id="input-1" type="text" v-model="newText" placeholder="" required></b-form-input>
+      </b-form-group>
 
-                <b-form-group class="m-3"
-            id="input-group-1"
-            label="Текст новости"
-            label-for="input-1">
-                <b-form-input id="input-1" type="text" v-model="newText"
-                placeholder="" required></b-form-input>
-        </b-form-group>
-
-                <b-form-group class="m-3"
-            id="input-group-1"
-            label="Ссылка на картинку"
-            label-for="input-1"
-            description="Например https://pic.com/pic.png">
-                <b-form-input id="input-1" type="text" v-model="newPicLink"
-                placeholder="" required></b-form-input>
-        </b-form-group>
-
+      <b-form-group class="m-3" id="input-group-1" label="Ссылка на картинку"
+        label-for="input-1" description="Например https://pic.com/pic.png">
+        <b-form-input id="input-1" type="text" v-model="newPicLink" placeholder="" required></b-form-input>
+      </b-form-group>
 
       <b-button type="submit" variant="primary">Save</b-button>
     </b-form>

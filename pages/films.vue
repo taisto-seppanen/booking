@@ -1,48 +1,35 @@
 <template>
   <b-container class="d-flex justify-content-center">
-      <b-alert
-      :show="dismissCountDown"
-      dismissible fade
-      variant="success"
-      @dismissed="dismissCountDown=0"
-      @dismiss-count-down="countDownChanged"
-      style="position: fixed; z-index: 1;"
-    >
+      <b-alert :show="dismissCountDown" dismissible fade
+      variant="success" @dismissed="dismissCountDown=0"
+      @dismiss-count-down="countDownChanged" style="position: fixed; z-index: 1;" >
       Сеанс успешно забронирован! 
     </b-alert>
+
     <div>
       <b-modal id="filmmodal" title="Бронирование мест" hide-footer no-close-on-backdrop @close="clear()">
-          <b-form inline>
-
-        <b-form-input placeholder="Дата" type="date" id="start" v-model="currentDate" />
-        Время: <b-form-select style="width: 50%; border: grey 1px solid; margin: 5px" v-model="currentTime">
-                <option :key="t.time" v-for="t in sessionsForCurrentDay"> {{t.time}} </option>
+        <b-form inline>
+          <b-form-input placeholder="Дата" type="date" id="start" v-model="currentDate" />
+            Время: <b-form-select style="width: 50%; border: grey 1px solid; margin: 5px" v-model="currentTime">
+              <option :key="t.time" v-for="t in sessionsForCurrentDay"> {{t.time}} </option>
                </b-form-select>
-          </b-form>
-              <div class="cinima" >
-               <div class="cinimaDisplay">Экран</div>
-               <div class="hall" style="display: grid; grid-template-columns: repeat(6, 1fr); grid-auto-flow: dense;">
-                 <b-button
-                   style="min-width: 30px; min-height: 50px"
-                   :class="{activBtn : currentPlaces.indexOf(number) != -1}"
-                   v-for="number in 36"
-                   :key="number"
-                   @click="clickOnSeat(number)"
-                   :disabled="isDisableBtn || placesForCureentSession.indexOf(number) != -1 || currentTime ==''"
-                 >
-                   {{number}}
-                 </b-button>
-               </div>
-               </div>
-
-              <b-button variant="info" class="mt-3" block 
-                @click="addBooking(), $bvModal.hide('filmmodal')" :disabled="currentPlaces.length == 0 || isDisableBtn">
-                  Зарезервировать
-              </b-button>
-
+        </b-form>
+          <div class="cinima" >
+           <div class="cinimaDisplay">Экран</div>
+           <div class="hall" style="display: grid; grid-template-columns: repeat(6, 1fr); grid-auto-flow: dense;">
+            <b-button
+              style="min-width: 30px; min-height: 50px" :class="{activBtn : currentPlaces.indexOf(number) != -1}"
+              v-for="number in 36" :key="number" @click="clickOnSeat(number)"
+              :disabled="isDisableBtn || placesForCureentSession.indexOf(number) != -1 || currentTime ==''">
+                {{number}}
+             </b-button>
+            </div>
+          </div>
+        <b-button variant="info" class="mt-3" block 
+          @click="addBooking(), $bvModal.hide('filmmodal')" :disabled="currentPlaces.length == 0 || isDisableBtn">
+            Зарезервировать
+        </b-button>
       </b-modal>
-
-
     </div>
     <div class="">
       <b-card no-body class="overflow-hidden" style="max-width: 80rem; margin: 10px;" :key="film.filmname" v-for="film in films">
@@ -105,7 +92,6 @@ export default {
 
       currentTime: function () {
         this.currentPlaces= [];
-
         if (this.currentTime != ""  ) {
           try {
           this.placesForCureentSession = this.sessionsForCurrentDay.find((x) => x.time == this.currentTime).places;

@@ -2,7 +2,7 @@
      <b-container>
      <h1>О нашем кинотеатре</h1>
      <div class='aboutWrapper'>
-          <div class='gridItem'><img src="../assets/kalevala_1.jpg" alt="" srcset=""></div>
+          <div class='gridItem'><img src="../static/kalevala_1.jpg" alt="" srcset=""></div>
           <div class='gridItem'><p>
                Современный кинотеатр с огромным экраном и вместительным залом на 400 мест.
                В аппаратной установлено оригинальное оборудование Christie,
@@ -19,13 +19,11 @@
                В начале Первомайского проспекта поднялось современное здание с оригинальным фасадом. Здесь два зрительных зала.
                Размеры экрана без малого 20 метров в длину, высота — 9 метров. Впервые в РСФСР в комплекс кинотеатра вошел ресторан». 
           </p></div>
-          <div class='gridItem'><img src="../assets/kalevala_3.jpg" alt="" srcset=""></div>
-          <div class='gridItem'><img src="../assets/kalevala_2.jpg" alt="" srcset=""></div>
+          <div class='gridItem'><img src="../static/kalevala_3.jpg" alt="" srcset=""></div>
+          <div class='gridItem'><img src="../static/kalevala_2.jpg" alt="" srcset=""></div>
           <div class='gridItem'><p>
                Фасад здания укарешен пермским стрит-арт-художником Александром Жуневым 
           </p></div>
-          
-
      </div>
      </b-container>
 </template>
@@ -36,7 +34,6 @@
           background: rgb(241, 241, 241);
           border-radius: 5px;
      }
-
      h1 {
           text-align: center;
           margin: 20px;
@@ -47,7 +44,6 @@
           justify-content: center;
           align-self: center;
      }
-
      img {
           width: 100%;
      }
@@ -55,7 +51,6 @@
           display: grid;
           grid-template-areas: "a a";
      }
-
      @media (max-width: 960px) {
         .aboutWrapper {
           display: grid;

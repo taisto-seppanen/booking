@@ -1,5 +1,4 @@
 <template>
-
 <div>
   <b-navbar toggleable="lg" type="dark" variant="dark">
     <b-navbar-brand href="#" style="display: flex; align-items: center; width: 120px;
@@ -16,5 +15,4 @@
     </b-collapse>
   </b-navbar>
 </div>
-
 </template>

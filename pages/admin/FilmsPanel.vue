@@ -1,53 +1,33 @@
 <template>
     <b-container>
         <div class="alert alert-danger" role="alert">Этот раздел в разработке</div>
-
             <b-button variant="primary" @click="isVisible = !isVisible">Добавить фильм</b-button>
 
     <b-form v-if="isVisible" @submit.stop.prevent="addFilm" class="m-3">
+      <b-form-group class="m-3" id="input-group-1" label="Название фильма" label-for="input-1">
+        <b-form-input id="input-1" type="text" v-model="filmname" placeholder="" required></b-form-input>
+      </b-form-group>
 
-        <b-form-group class="m-3"
-            id="input-group-1"
-            label="Название фильма"
-            label-for="input-1">
-                <b-form-input id="input-1" type="text" v-model="filmname"
-                placeholder="" required></b-form-input>
-        </b-form-group>
-
-        <b-form-group class="m-3"
-            id="input-group-1"
-            label="Описание фильма"
-            label-for="input-1">
-                <b-form-input id="input-1" type="text" v-model="filmdescription"
-                placeholder="" required></b-form-input>
-        </b-form-group>
+    <b-form-group class="m-3" id="input-group-1" label="Описание фильма" label-for="input-1">
+      <b-form-input id="input-1" type="text" v-model="filmdescription" placeholder="" required></b-form-input>
+    </b-form-group>
 
 
-        <b-form-group class="m-3"
-            id="input-group-1"
-            label="Ссылка на картинку"
-            label-for="input-1"
-            description="Например https://pic.com/pic.png">
-                <b-form-input id="input-1" type="text" v-model="filmpic"
-                placeholder="" required></b-form-input>
-        </b-form-group>
-
-
+    <b-form-group class="m-3" id="input-group-1" label="Ссылка на картинку"
+      label-for="input-1" description="Например https://pic.com/pic.png">
+     <b-form-input id="input-1" type="text" v-model="filmpic"
+      placeholder="" required></b-form-input>
+      </b-form-group>
       <b-button type="submit" variant="primary">Save</b-button>
     </b-form>
 
-      <b-list-group class="m-3">
+    <b-list-group class="m-3">
       <h3>Список фильмов:</h3>
       <b-list-group-item :key="film.filmname" v-for="film in films" style="display: flex; justify-content: space-between;">
         {{ film.filmname }}
-
         <b-button v-b-modal.filmmodal @click="chooseFilm(film)" variant="info">Добавить сеанс</b-button>
-  
-        <!-- <b-button-close style="color: red" @click.stop.prevent=""></b-button-close> -->
       </b-list-group-item>
     </b-list-group>
-
-<!-- модалка -->
 
       <b-modal id="filmmodal" title="Добавление сеанса" hide-footer no-close-on-backdrop @close="clear()">
           <b-form @submit.stop.prevent='save'>
@@ -56,13 +36,12 @@
           <p>Время: {{newSessionTime}}</p>          
           <b-form-input style='width: 100%;' type="range" min="0" max="23" v-model="newSessionTime"></b-form-input>
         </b-form>
-
         <b-button variant="info" class="mt-3" block 
           @click="addSession(), $bvModal.hide('filmmodal')" :disabled="newSessionDate == '' && newSessionTime == ''">
           Создать
         </b-button>
-
       </b-modal>
+
     </b-container>
 </template>
 
@@ -107,7 +86,6 @@ export default {
   },
 
   methods: {
-
     chooseFilm(film) {
     this.currentFilm = film;
     },
@@ -118,7 +96,6 @@ export default {
         filmdescription: this.filmdescription,
         filmpic: this.filmpic,
       });
-      
       this.save(this.films);
       this.clear();
       this.get();
@@ -133,21 +110,13 @@ export default {
         console.warn("dont panic its ok " + e)
       }
       if (dateIndex != -1) {
-        console.warn(this.films[filmIndex].dates[dateIndex].sessions)
-
-        let id = this.films[filmIndex].dates[dateIndex].length;
-
         this.films[filmIndex].dates[dateIndex].sessions.push({places: { 0 : 0 }, time: this.newSessionTime});
-
       } else {
-
         this.films[filmIndex].dates.push({
           date: this.newSessionDate,
             sessions: [ { time : this.newSessionTime, places : [0]} ]
         })
-        
       }
-
       this.save(this.films);
     },
 

@@ -4,9 +4,9 @@
             <p><strong>Адрес: </strong>{{ adress }}</p>
             <p><strong>Телефон: </strong> <a :href="`tel:`+telephone">{{ telephone }}</a></p>
             <p><strong>Социальные сети: </strong>
-                <a :href='vkLink' target="_blank" v-if='vkLink != ""'><img class="soclink" src="../assets/vk-logo.svg"/></a>
-                <a :href='instagramLink' target="_blank" v-if='instagramLink != ""'><img class="soclink" src="../assets/Instagram_logo.svg"/></a>
-                <a :href='telegramLink' target="_blank" v-if='telegramLink != ""'><img class="soclink" src="../assets/Telegram_logo.svg"/></a>
+                <a :href='vkLink' target="_blank" v-if='vkLink != ""'><img class="soclink" src="../static/vk-logo.svg"/></a>
+                <a :href='instagramLink' target="_blank" v-if='instagramLink != ""'><img class="soclink" src="../static/Instagram_logo.svg"/></a>
+                <a :href='telegramLink' target="_blank" v-if='telegramLink != ""'><img class="soclink" src="../static/Telegram_logo.svg"/></a>
             </p>
         </div>
         <div class="gridItem">
@@ -37,16 +37,13 @@ export default {
 
 methods: {
     get() {
-    firebase.database().ref('contacts/').get().then((snapshot) => {
-        if (snapshot.exists()) {
+    firebase.database().ref('contacts/').get().then((snapshot) => { if (snapshot.exists()) {
             this.adress = snapshot.val().adress;
             this.telephone = snapshot.val().telephone;
             this.vkLink = snapshot.val().vkLink;
             this.instagramLink = snapshot.val().instagramLink;
             this.telegramLink = snapshot.val().telegramLink;
-        } else {
-            console.warn("bad request")
-        }
+        } else { console.warn("bad request") }
         })
         },
     },
