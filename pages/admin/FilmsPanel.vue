@@ -1,7 +1,6 @@
 <template>
     <b-container>
-        <div class="alert alert-danger" role="alert">Этот раздел в разработке</div>
-            <b-button variant="primary" @click="isVisible = !isVisible">Добавить фильм</b-button>
+    <b-button variant="primary" @click="isVisible = !isVisible">Добавить фильм</b-button>
 
     <b-form v-if="isVisible" @submit.stop.prevent="addFilm" class="m-3">
       <b-form-group class="m-3" id="input-group-1" label="Название фильма" label-for="input-1">
