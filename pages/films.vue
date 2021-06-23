@@ -55,6 +55,9 @@
 <script>
 import firebase from "firebase/app";
 import "firebase/database";
+import {saveFilm, getFilm  } from '../plugins/dataMethods'
+import {checkDate } from '../plugins/dateChecker'
+
 var database = firebase.database();
 
 export default {
@@ -102,28 +105,7 @@ export default {
           this.placesForCureentSession = [];
         }
 
-        function format(date) {
-          var d = date.getDate();
-          var m = date.getMonth() + 1;
-          var y = date.getFullYear();
-          return '' + y + '-' + (m<=9 ? '0' + m : m) + '-' + (d <= 9 ? '0' + d : d);
-        }
-
-        var today = new Date();
-        var dateString = format(today);
-
-        if (new Date(this.currentDate) > new Date(dateString)) {
-            this.isDisableBtn = false; 
-            }
-          else if ( this.currentDate == dateString ) {
-            if (parseInt(this.currentTime) > parseInt(new Date().getHours())) {
-            this.isDisableBtn = false; 
-            } else {
-              this.isDisableBtn = true; 
-              }
-            } else {
-              this.isDisableBtn = true
-            }
+        this.isDisableBtn = checkDate(this.currentDate, this.currentTime);
       },
     },
 
@@ -194,16 +176,10 @@ export default {
     },
 
     async get() {
-      await firebase.database().ref('/films').get().then((snapshot) => {
-        if (snapshot.exists()) {
-            this.films = snapshot.val().newfilm;
-        } else {
-            console.warn("bad request")
-        }
-       })
-        },
-      }
-    };
+      this.films = await getFilm();
+    },
+  }
+};
 </script>
 
 <style scoped>

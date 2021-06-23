@@ -47,8 +47,9 @@
 
 <script>
 import firebase from 'firebase/app'
+import {saveFilm, getFilm  } from '../../plugins/dataMethods'
 import 'firebase/auth'
-import { getUserFromCookie, getUserFromSession } from '@/helpers'
+import getUserFromCookie from '@/helpers'
 
 export default {
   layout: "admin",
@@ -80,28 +81,32 @@ export default {
     }
   },
 
-  mounted() {
+  beforeMount() {
     this.get();
   },
 
   methods: {
+    async get(){
+     this.films = await getFilm();
+    },
+
     chooseFilm(film) {
     this.currentFilm = film;
     },
 
-    addFilm () {
+    async addFilm () {
       this.films.push({
         filmname: this.filmname,
         filmdescription: this.filmdescription,
         filmpic: this.filmpic,
         dates: []
       });
-      this.save(this.films);
+      await saveFilm(this.films);
       this.clear();
-      this.get();
+      getFilm();
     },
 
-    addSession() {
+    async addSession() {
       let filmIndex = this.films.map((e) => e.filmname).indexOf(this.currentFilm.filmname);
       let dateIndex = -1;
       try {
@@ -120,7 +125,7 @@ export default {
             sessions: [ { time : this.newSessionTime, places : [0]} ]
         })
       }
-      this.save(this.films);
+      await saveFilm(this.films);
     },
 
     clear(){
@@ -133,19 +138,7 @@ export default {
       this.newSessionTime = '';
     },
 
-    async save(newfilm) {
-        await firebase.database().ref('films/').set({ newfilm });
-    },
-    
-    async get() {
-      await firebase.database().ref('films/').get().then((snapshot) => {
-      if (snapshot.exists()) {
-          this.films = snapshot.val().newfilm;
-      } else {
-          console.warn("bad request")
-          }
-        })
-    },
+
   },
 }
 </script>
