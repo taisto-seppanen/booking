@@ -129,7 +129,6 @@ export default {
 
     addBooking() {
       try {
-      console.warn(this.films);
       let filmIndex = Array.from(this.films).map((e) => e.filmname).indexOf(this.currentFilm.filmname);
 
       let dateIndex = this.currentFilm.dates.map((e) => e.date).indexOf(this.currentDate);
@@ -137,9 +136,7 @@ export default {
 
       if (!this.films[filmIndex].dates[dateIndex].sessions[sessionIndex].places) {
       this.films[filmIndex].dates[dateIndex].sessions[sessionIndex].places = this.currentPlaces;
-        console.warn('add true');
       } else {
-        console.warn('add else');
       for (let x of this.currentPlaces) {
         this.films[filmIndex].dates[dateIndex].sessions[sessionIndex].places.push(parseInt(x));
       }}

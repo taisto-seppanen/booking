@@ -49,7 +49,7 @@
 import firebase from 'firebase/app'
 import {saveFilm, getFilm  } from '../../plugins/dataMethods'
 import 'firebase/auth'
-import getUserFromCookie from '@/helpers'
+import { getUserFromCookie, getUserFromSession } from '@/helpers'
 
 export default {
   layout: "admin",
@@ -81,7 +81,7 @@ export default {
     }
   },
 
-  beforeMount() {
+  mounted() {
     this.get();
   },
 
@@ -117,8 +117,6 @@ export default {
 
       if (dateIndex != -1) {
         this.films[filmIndex].dates[dateIndex].sessions.push({places: { 0 : 0 }, time: this.newSessionTime});
-                console.warn('true!!!!!')
-
       } else {
         this.films[filmIndex].dates.push({
           date: this.newSessionDate,
@@ -137,8 +135,6 @@ export default {
       this.newSessionDate = '';
       this.newSessionTime = '';
     },
-
-
   },
 }
 </script>
