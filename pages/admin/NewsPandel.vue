@@ -36,6 +36,7 @@
 <script>
 import firebase from 'firebase/app'
 import 'firebase/auth'
+import {saveFilm, getNews  } from '../../plugins/dataMethods'
 import { getUserFromCookie, getUserFromSession } from '@/helpers'
 
 export default {
@@ -100,12 +101,8 @@ export default {
       firebase.database().ref('news/').set({ newsArr });
     },
 
-    get() {
-    firebase.database().ref('news/').get().then((snapshot) => {
-        if (snapshot.exists()) {
-          this.newsArray = snapshot.val().newsArr;
-        } else console.warn("bad request");
-      })
+    async get() {
+      this.newsArray = await getNews();
     },
   }
 };

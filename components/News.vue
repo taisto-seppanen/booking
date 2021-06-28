@@ -20,7 +20,8 @@
 </template>
 
 <script >
-import firebase from 'firebase/app'
+import {saveFilm, getNews  } from '../plugins/dataMethods'
+
 export default {
     data() {
         return {
@@ -34,12 +35,8 @@ export default {
       replaceByDefault(e) {
        e.target.src = 'https://guwahatiplus.com/public/web/images/default-news.png';
     },
-    get() {
-      firebase.database().ref('news/').get().then((snapshot) => {
-        if (snapshot.exists()) {
-          this.newsArray = snapshot.val().newsArr.reverse();
-        } else console.warn("bad request");
-      })
+    async get() {
+      this.newsArray = await getNews();
     },
   }
  }
